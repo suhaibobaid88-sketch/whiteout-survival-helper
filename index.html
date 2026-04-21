@@ -87,7 +87,6 @@ h3 {
   padding: 6px;
   margin: 4px;
   border-radius: 5px;
-  cursor: pointer;
 }
 
 /* ===== COLORS ===== */
@@ -114,19 +113,16 @@ h3 {
     height: auto;
   }
 }
-
 </style>
 </head>
 
 <body>
 
-<!-- ===== MAIN CONTAINER ===== -->
 <div class="container">
 
   <!-- LEFT -->
   <div class="panel">
 
-    <!-- HEADER + BUTTON -->
     <div class="header-bar">
       <h2>Alliance Members</h2>
 
@@ -136,7 +132,7 @@ h3 {
     </div>
 
     <h3>R5 (Leader)</h3>
-    <div id="r5" class="box r5" contenteditable="true"></div>
+    <div class="box r5">LeaderName</div>
 
     <hr>
 
@@ -169,71 +165,35 @@ h3 {
 
 <script>
 
+/* ===== DATA (أنت تعدل هنا فقط) ===== */
+
+let r4 = [
+"Player1","Player2","Player3","Player4","Player5",
+"Player6","Player7","Player8","Player9","Player10",
+"Player11","Player12","Player13","Player14","Player15",
+"Player16","Player17","Player18","Player19","Player20"
+];
+
+let r3 = Array(90).fill("Empty");
+let r2 = Array(30).fill("Empty");
+let r1 = Array(20).fill("Empty");
+
+/* ===== RENDER ===== */
+
+function renderList(id,data,className){
+  let container = document.getElementById(id);
+  container.innerHTML = "";
+
+  data.forEach(name => {
+    container.innerHTML += `<div class="box ${className}">${name}</div>`;
+  });
+}
+
 /* ===== LOAD ===== */
-function load(){
-
-  let r5 = localStorage.getItem("r5") || "Click to set R5";
-  let r5box = document.getElementById("r5");
-  r5box.innerText = r5;
-
-  r5box.oninput = () => {
-    localStorage.setItem("r5", r5box.innerText);
-  };
-
-  let r4 = JSON.parse(localStorage.getItem("r4") || "[]");
-  let r4c = document.getElementById("r4");
-  r4c.innerHTML = "";
-
-  for(let i=0;i<20;i++){
-    let name = r4[i] || "Click to edit";
-
-    r4c.innerHTML += `
-      <div class="box r4" contenteditable="true"
-      oninput="saveRank('r4',${i},this.innerText)">
-        ${name}
-      </div>
-    `;
-  }
-
-}
-
-/* ===== RIGHT SIDE ===== */
-function loadRight(){
-  makeList("r3",90,"r3","rgba(77,184,255,0.4)");
-  makeList("r2",30,"r2","rgba(144,238,144,0.4)");
-  makeList("r1",20,"r1","rgba(128,128,128,0.4)");
-}
-
-function makeList(id,count,key,color){
-
-  let data = JSON.parse(localStorage.getItem(key) || "[]");
-  let c = document.getElementById(id);
-  c.innerHTML = "";
-
-  for(let i=0;i<count;i++){
-    let name = data[i] || "Click to edit";
-
-    c.innerHTML += `
-      <div class="box"
-      style="background:${color}"
-      contenteditable="true"
-      oninput="saveRank('${key}',${i},this.innerText)">
-        ${name}
-      </div>
-    `;
-  }
-}
-
-/* ===== SAVE ===== */
-function saveRank(key,i,value){
-  let data = JSON.parse(localStorage.getItem(key) || "[]");
-  data[i] = value;
-  localStorage.setItem(key, JSON.stringify(data));
-}
-
-/* ===== START ===== */
-load();
-loadRight();
+renderList("r4", r4, "r4");
+renderList("r3", r3, "r3");
+renderList("r2", r2, "r2");
+renderList("r1", r1, "r1");
 
 </script>
 
