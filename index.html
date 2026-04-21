@@ -17,12 +17,12 @@ body {
   color: white;
 }
 
-/* اللوحة يمين */
+/* ===== LEFT PANEL ===== */
 .panel {
   position: absolute;
   left: 20px;
   top: 20px;
-  width: 450px;
+  width: 420px;
   height: 90vh;
   background: rgba(0,0,0,0.35);
   border-radius: 10px;
@@ -30,12 +30,25 @@ body {
   overflow-y: auto;
 }
 
-/* عنوان */
+/* ===== RIGHT PANEL ===== */
+.panel-right {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 420px;
+  height: 90vh;
+  background: rgba(0,0,0,0.35);
+  border-radius: 10px;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+/* ===== TITLE ===== */
 h2 {
   text-align: center;
 }
 
-/* الخانات */
+/* ===== BOX ===== */
 .box {
   padding: 6px;
   margin: 4px;
@@ -43,15 +56,19 @@ h2 {
   cursor: pointer;
 }
 
-/* ألوان شفافة */
+/* ===== COLORS ===== */
 .r5 { background: rgba(255,215,0,0.5); color: black; }
 .r4 { background: rgba(255,165,0,0.4); color: black; }
+.r3 { background: rgba(77,184,255,0.4); color: black; }
+.r2 { background: rgba(144,238,144,0.4); color: black; }
+.r1 { background: rgba(128,128,128,0.4); color: white; }
 
 </style>
 </head>
 
 <body>
 
+<!-- ================= LEFT ================= -->
 <div class="panel">
 
   <h2>Alliance Members</h2>
@@ -62,15 +79,34 @@ h2 {
 
   <hr>
 
-  <!-- R4 -->
-  <h3>R4</h3>
+  <h3>R4 (20)</h3>
   <div id="r4"></div>
+
+</div>
+
+<!-- ================= RIGHT ================= -->
+<div class="panel-right">
+
+  <h2>Ranks System</h2>
+
+  <h3>R3 (90 Players)</h3>
+  <div id="r3"></div>
+
+  <hr>
+
+  <h3>R2 (30 Players)</h3>
+  <div id="r2"></div>
+
+  <hr>
+
+  <h3>R1 (20 Players)</h3>
+  <div id="r1"></div>
 
 </div>
 
 <script>
 
-/* تحميل البيانات */
+/* ===== LOAD ALL ===== */
 function load(){
 
   // R5
@@ -84,30 +120,61 @@ function load(){
 
   // R4
   let r4 = JSON.parse(localStorage.getItem("r4") || "[]");
-  let container = document.getElementById("r4");
-  container.innerHTML = "";
+  let r4c = document.getElementById("r4");
+  r4c.innerHTML = "";
 
   for(let i=0;i<20;i++){
     let name = r4[i] || "Click to edit";
 
-    container.innerHTML += `
+    r4c.innerHTML += `
       <div class="box r4" contenteditable="true"
-      oninput="saveR4(${i}, this.innerText)">
+      oninput="saveRank('r4',${i},this.innerText)">
+        ${name}
+      </div>
+    `;
+  }
+
+}
+
+/* ===== RIGHT SIDE ===== */
+function loadRight(){
+
+  makeList("r3",90,"r3","rgba(77,184,255,0.4)");
+  makeList("r2",30,"r2","rgba(144,238,144,0.4)");
+  makeList("r1",20,"r1","rgba(128,128,128,0.4)");
+
+}
+
+function makeList(id,count,key,color){
+
+  let data = JSON.parse(localStorage.getItem(key) || "[]");
+  let c = document.getElementById(id);
+  c.innerHTML = "";
+
+  for(let i=0;i<count;i++){
+    let name = data[i] || "Click to edit";
+
+    c.innerHTML += `
+      <div class="box"
+      style="background:${color}"
+      contenteditable="true"
+      oninput="saveRank('${key}',${i},this.innerText)">
         ${name}
       </div>
     `;
   }
 }
 
-/* حفظ R4 */
-function saveR4(i,value){
-  let r4 = JSON.parse(localStorage.getItem("r4") || "[]");
-  r4[i] = value;
-  localStorage.setItem("r4", JSON.stringify(r4));
+/* ===== SAVE ===== */
+function saveRank(key,i,value){
+  let data = JSON.parse(localStorage.getItem(key) || "[]");
+  data[i] = value;
+  localStorage.setItem(key, JSON.stringify(data));
 }
 
-/* تشغيل أول مرة */
+/* ===== START ===== */
 load();
+loadRight();
 
 </script>
 
