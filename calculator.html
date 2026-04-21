@@ -1,102 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>WOS Troops Calculator</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 <style>
-body{
-    margin:0;
-    font-family:Arial;
-    background:url("Clk.png") center/cover no-repeat;
-    color:white;
+
+/* ===== RESET ===== */
+html, body {
+    margin: 0;
+    height: 100%;
+    font-family: Arial;
+    color: white;
 }
 
-.overlay{
-    background:rgba(0,0,0,0.78);
-    min-height:100vh;
-    padding:12px;
+/* ===== BACKGROUND FIX (ما بتطلع لحالها) ===== */
+.bg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url("Clk.png") center/cover no-repeat;
+    z-index: -1;
 }
 
-/* 🔥 MAIN CONTAINER */
-.container{
-    max-width:1000px;
-    margin:auto;
+/* ===== OVERLAY ===== */
+.overlay {
+    min-height: 100vh;
+    background: rgba(0,0,0,0.78);
+    padding: 12px;
 }
 
-/* 🎮 CARD STYLE (Game Panel) */
-.card{
-    background:rgba(20,20,20,0.75);
-    border:1px solid rgba(255,255,255,0.1);
-    border-radius:14px;
-    padding:12px;
-    margin-bottom:12px;
-    box-shadow:0 0 10px rgba(0,0,0,0.5);
+/* ===== CONTAINER ===== */
+.container {
+    max-width: 1000px;
+    margin: auto;
 }
 
-/* TITLE */
-.card h3{
-    margin:0 0 10px;
-    font-size:16px;
-    color:#ffd700;
+/* ===== CARD STYLE ===== */
+.card {
+    background: rgba(20,20,20,0.75);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 14px;
+    padding: 12px;
+    margin-bottom: 12px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
-/* LABEL SMALL */
-.label{
-    font-size:12px;
-    opacity:0.7;
-    margin:6px 0 4px;
+/* ===== TITLES ===== */
+h2 {
+    margin: 0 0 10px;
 }
 
-/* GRID INPUTS */
-.grid4{
-    display:grid;
-    grid-template-columns: repeat(4,1fr);
-    gap:6px;
+h3 {
+    margin: 0 0 10px;
+    color: #ffd700;
 }
 
-.grid2{
-    display:grid;
-    grid-template-columns: repeat(2,1fr);
-    gap:6px;
+/* ===== LABEL ===== */
+.label {
+    font-size: 12px;
+    opacity: 0.7;
+    margin: 6px 0 4px;
 }
 
-/* INPUT STYLE */
-input{
-    width:100%;
-    padding:6px;
-    border-radius:6px;
-    border:none;
-    font-size:13px;
-    background:rgba(255,255,255,0.1);
-    color:white;
-    outline:none;
+/* ===== GRID ===== */
+.grid2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6px;
 }
 
-input::placeholder{
-    color:rgba(255,255,255,0.5);
+.grid4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 6px;
 }
 
-/* BUTTON */
-button{
-    width:100%;
-    padding:10px;
-    margin-top:10px;
-    border:none;
-    border-radius:10px;
-    background:linear-gradient(90deg,#ffcc00,#ff8800);
-    color:black;
-    font-weight:bold;
-    cursor:pointer;
+/* ===== INPUT ===== */
+input {
+    width: 100%;
+    padding: 7px;
+    border-radius: 6px;
+    border: none;
+    font-size: 13px;
+    background: rgba(255,255,255,0.1);
+    color: white;
+    outline: none;
 }
 
-/* RESULT BOX */
-.result{
-    background:rgba(0,0,0,0.6);
-    padding:12px;
-    border-radius:10px;
-    white-space:pre-line;
-    font-size:14px;
+input::placeholder {
+    color: rgba(255,255,255,0.5);
 }
 
-/* BACK */
-.back{
-    margin-bottom:10px;
-    background:#444;
-    color:white;
+/* ===== BUTTON ===== */
+button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 10px;
+    background: linear-gradient(90deg,#ffcc00,#ff8800);
+    font-weight: bold;
+    cursor: pointer;
 }
+
+/* ===== RESULT ===== */
+.result {
+    white-space: pre-line;
+    line-height: 1.6;
+}
+
+/* ===== BACK BUTTON ===== */
+.back {
+    margin-bottom: 10px;
+    background: #444;
+    color: white;
+}
+
 </style>
+</head>
+
+<body>
+
+<!-- ✅ BACKGROUND FIX -->
+<div class="bg"></div>
+
+<div class="overlay">
+<div class="container">
+
+<button class="back" onclick="goBack()">⬅ Back</button>
+
+<h2>🔥 WOS Troops Calculator</h2>
+
+<!-- ================= INFANTRY ================= -->
+<div class="card">
+<h3>🪖 Infantry</h3>
+
+<input id="infNum" placeholder="Troops Number">
+
+<div class="label">💰 Cost per troop</div>
+<div class="grid2">
+<input id="infMeat" placeholder="Meat">
+<input id="infWood" placeholder="Wood">
+</div>
+
+<div class="grid2">
+<input id="infIron" placeholder="Iron">
+<input id="infCoal" placeholder="Coal">
+</div>
+
+<div class="label">⏱ Time (D H M S)</div>
+<div class="grid4">
+<input id="infD" placeholder="D">
+<input id="infH" placeholder="H">
+<input id="infM" placeholder="M">
+<input id="infS" placeholder="S">
+</div>
+
+<input id="infPower" placeholder="Power per troop">
+</div>
+
+<!-- ================= LANCER ================= -->
+<div class="card">
+<h3>🐎 Lancer</h3>
+
+<input id="lanNum" placeholder="Troops Number">
+
+<div class="grid2">
+<input id="lanMeat" placeholder="Meat">
+<input id="lanWood" placeholder="Wood">
+</div>
+
+<div class="grid2">
+<input id="lanIron" placeholder="Iron">
+<input id="lanCoal" placeholder="Coal">
+</div>
+
+<div class="grid4">
+<input id="lanD" placeholder="D">
+<input id="lanH" placeholder="H">
+<input id="lanM" placeholder="M">
+<input id="lanS" placeholder="S">
+</div>
+
+<input id="lanPower" placeholder="Power per troop">
+</div>
+
+<!-- ================= MARKSMAN ================= -->
+<div class="card">
+<h3>🎯 Marksman</h3>
+
+<input id="marNum" placeholder="Troops Number">
+
+<div class="grid2">
+<input id="marMeat" placeholder="Meat">
+<input id="marWood" placeholder="Wood">
+</div>
+
+<div class="grid2">
+<input id="marIron" placeholder="Iron">
+<input id="marCoal" placeholder="Coal">
+</div>
+
+<div class="grid4">
+<input id="marD" placeholder="D">
+<input id="marH" placeholder="H">
+<input id="marM" placeholder="M">
+<input id="marS" placeholder="S">
+</div>
+
+<input id="marPower" placeholder="Power per troop">
+</div>
+
+<button onclick="calc()">⚡ CALCULATE</button>
+
+<div class="card result" id="result"></div>
+
+</div>
+</div>
+
+<script>
+
+function goBack(){
+    window.location.href = "more.html";
+}
+
+function toSeconds(d,h,m,s){
+    return (Number(d||0)*86400)+(Number(h||0)*3600)+(Number(m||0)*60)+Number(s||0);
+}
+
+function format(sec){
+    let d=Math.floor(sec/86400);
+    sec%=86400;
+    let h=Math.floor(sec/3600);
+    sec%=3600;
+    let m=Math.floor(sec/60);
+    let s=sec%60;
+    return `${d}D ${h}H ${m}M ${s}S`;
+}
+
+function calc(){
+
+let M=0,W=0,I=0,C=0,P=0,T=0;
+
+function run(num,meat,wood,iron,coal,d,h,m,s,p){
+
+    let n=+num.value||0;
+
+    M += n*(+meat.value||0);
+    W += n*(+wood.value||0);
+    I += n*(+iron.value||0);
+    C += n*(+coal.value||0);
+
+    P += n*(+p.value||0);
+
+    let time = toSeconds(d.value,h.value,m.value,s.value);
+    T += n*time;
+}
+
+// INFANTRY
+run(infNum,infMeat,infWood,infIron,infCoal,infD,infH,infM,infS,infPower);
+
+// LANCER
+run(lanNum,lanMeat,lanWood,lanIron,lanCoal,lanD,lanH,lanM,lanS,lanPower);
+
+// MARKSMAN
+run(marNum,marMeat,marWood,marIron,marCoal,marD,marH,marM,marS,marPower);
+
+result.innerText =
+`📊 TOTAL RESULT
+
+🥩 Meat: ${M}
+🪵 Wood: ${W}
+🔩 Iron: ${I}
+🪨 Coal: ${C}
+
+⚡ Power: ${P}
+
+⏱ Time: ${format(T)}`;
+}
+
+</script>
+
+</body>
+</html>
