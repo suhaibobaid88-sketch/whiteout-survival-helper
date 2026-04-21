@@ -7,7 +7,6 @@
 
 <style>
 
-/* ===== RESET ===== */
 html, body {
     margin: 0;
     height: 100%;
@@ -15,7 +14,7 @@ html, body {
     color: white;
 }
 
-/* ===== BACKGROUND FIX (ما بتطلع لحالها) ===== */
+/* ===== BACKGROUND FIX ===== */
 .bg {
     position: fixed;
     top: 0;
@@ -39,13 +38,13 @@ html, body {
     margin: auto;
 }
 
-/* ===== CARD STYLE ===== */
+/* ===== CARD ===== */
 .card {
     background: rgba(20,20,20,0.75);
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 14px;
-    padding: 12px;
-    margin-bottom: 12px;
+    padding: 14px;
+    margin-bottom: 16px;
     box-shadow: 0 0 10px rgba(0,0,0,0.5);
 }
 
@@ -63,27 +62,29 @@ h3 {
 .label {
     font-size: 12px;
     opacity: 0.7;
-    margin: 6px 0 4px;
+    margin: 12px 0 6px;
 }
 
-/* ===== GRID ===== */
+/* ===== GRID (SPACING IMPROVED) ===== */
 .grid2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 6px;
+    gap: 12px; /* 👈 زودنا المسافة */
+    margin-bottom: 6px;
 }
 
 .grid4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 6px;
+    gap: 12px; /* 👈 زودنا المسافة */
+    margin-bottom: 6px;
 }
 
 /* ===== INPUT ===== */
 input {
     width: 100%;
-    padding: 7px;
-    border-radius: 6px;
+    padding: 8px;
+    border-radius: 7px;
     border: none;
     font-size: 13px;
     background: rgba(255,255,255,0.1);
@@ -91,8 +92,9 @@ input {
     outline: none;
 }
 
-input::placeholder {
-    color: rgba(255,255,255,0.5);
+/* توسيط وقت (أوضح بصريًا) */
+.grid4 input {
+    text-align: center;
 }
 
 /* ===== BUTTON ===== */
@@ -113,7 +115,7 @@ button {
     line-height: 1.6;
 }
 
-/* ===== BACK BUTTON ===== */
+/* ===== BACK ===== */
 .back {
     margin-bottom: 10px;
     background: #444;
@@ -125,7 +127,6 @@ button {
 
 <body>
 
-<!-- ✅ BACKGROUND FIX -->
 <div class="bg"></div>
 
 <div class="overlay">
@@ -152,7 +153,7 @@ button {
 <input id="infCoal" placeholder="Coal">
 </div>
 
-<div class="label">⏱ Time (D H M S)</div>
+<div class="label">⏱ Time (D / H / M / S)</div>
 <div class="grid4">
 <input id="infD" placeholder="D">
 <input id="infH" placeholder="H">
@@ -179,6 +180,7 @@ button {
 <input id="lanCoal" placeholder="Coal">
 </div>
 
+<div class="label">⏱ Time (D / H / M / S)</div>
 <div class="grid4">
 <input id="lanD" placeholder="D">
 <input id="lanH" placeholder="H">
@@ -205,6 +207,7 @@ button {
 <input id="marCoal" placeholder="Coal">
 </div>
 
+<div class="label">⏱ Time (D / H / M / S)</div>
 <div class="grid4">
 <input id="marD" placeholder="D">
 <input id="marH" placeholder="H">
@@ -261,13 +264,13 @@ function run(num,meat,wood,iron,coal,d,h,m,s,p){
     T += n*time;
 }
 
-// INFANTRY
+// Infantry
 run(infNum,infMeat,infWood,infIron,infCoal,infD,infH,infM,infS,infPower);
 
-// LANCER
+// Lancer
 run(lanNum,lanMeat,lanWood,lanIron,lanCoal,lanD,lanH,lanM,lanS,lanPower);
 
-// MARKSMAN
+// Marksman
 run(marNum,marMeat,marWood,marIron,marCoal,marD,marH,marM,marS,marPower);
 
 result.innerText =
