@@ -2,38 +2,167 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>WOS Troops Calculator</title>
+<title>WOS Full Calculator</title>
 
 <style>
 body {
-    margin: 0;
+    margin:0;
     font-family: Arial;
     background: url("Clk.png") center/cover no-repeat;
-    color: white;
+    color:white;
 }
 
 .overlay {
     background: rgba(0,0,0,0.75);
-    min-height: 100vh;
-    padding: 20px;
+    min-height:100vh;
+    padding:20px;
 }
 
 .box {
-    max-width: 600px;
-    margin: auto;
-    background: rgba(255,255,255,0.08);
-    padding: 15px;
-    border-radius: 12px;
+    max-width:700px;
+    margin:auto;
+    background:rgba(255,255,255,0.08);
+    padding:15px;
+    border-radius:12px;
 }
 
 input {
-    width: 100%;
-    padding: 8px;
-    margin: 5px 0;
-    border-radius: 6px;
-    border: none;
+    width:100%;
+    padding:8px;
+    margin:5px 0;
+    border:none;
+    border-radius:6px;
 }
 
+button {
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+.result {
+    margin-top:15px;
+    line-height:1.6;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay">
+<div class="box">
+
+<h2>WOS Full Troops Calculator</h2>
+
+<h3>Infantry</h3>
+<input id="infNum" placeholder="Number">
+<input id="infSpeed" placeholder="Speed multiplier (1 = normal)">
+<input id="infSpeedItems" placeholder="Speed items (minutes reduction)">
+
+<h3>Lancer</h3>
+<input id="lanNum">
+<input id="lanSpeed">
+<input id="lanSpeedItems">
+
+<h3>Marksman</h3>
+<input id="marNum">
+<input id="marSpeed">
+<input id="marSpeedItems">
+
+<hr>
+
+<h3>Speed Boost (Global %)</h3>
+<input id="globalSpeed" placeholder="e.g 1.2 = +20% speed">
+
+<button onclick="calc()">Calculate</button>
+
+<div class="result" id="result"></div>
+
+</div>
+</div>
+
+<script>
+
+// ===== CONFIG (قابلة للتعديل حسب اللعبة) =====
+const data = {
+    infantry: { meat: 50, wood: 60, iron: 40, time: 2, power: 10 },
+    lancer:   { meat: 70, wood: 80, iron: 60, time: 3, power: 15 },
+    marksman: { meat: 60, wood: 70, iron: 50, time: 2.5, power: 12 }
+};
+
+// ===== MAIN =====
+function calc() {
+
+    let inf = +infNum.value || 0;
+    let lan = +lanNum.value || 0;
+    let mar = +marNum.value || 0;
+
+    let infS = +infSpeed.value || 1;
+    let lanS = +lanSpeed.value || 1;
+    let marS = +marSpeed.value || 1;
+
+    let infItem = +infSpeedItems.value || 0;
+    let lanItem = +lanSpeedItems.value || 0;
+    let marItem = +marSpeedItems.value || 0;
+
+    let global = +globalSpeed.value || 1;
+
+    let totalMeat = 0;
+    let totalWood = 0;
+    let totalIron = 0;
+    let totalPower = 0;
+    let totalTime = 0;
+
+    // ===== Infantry =====
+    totalMeat += inf * data.infantry.meat;
+    totalWood += inf * data.infantry.wood;
+    totalIron += inf * data.infantry.iron;
+    totalPower += inf * data.infantry.power;
+
+    let infTime = (inf * data.infantry.time) / (infS * global);
+    infTime -= infItem;
+    totalTime += Math.max(infTime, 0);
+
+    // ===== Lancer =====
+    totalMeat += lan * data.lancer.meat;
+    totalWood += lan * data.lancer.wood;
+    totalIron += lan * data.lancer.iron;
+    totalPower += lan * data.lancer.power;
+
+    let lanTime = (lan * data.lancer.time) / (lanS * global);
+    lanTime -= lanItem;
+    totalTime += Math.max(lanTime, 0);
+
+    // ===== Marksman =====
+    totalMeat += mar * data.marksman.meat;
+    totalWood += mar * data.marksman.wood;
+    totalIron += mar * data.marksman.iron;
+    totalPower += mar * data.marksman.power;
+
+    let marTime = (mar * data.marksman.time) / (marS * global);
+    marTime -= marItem;
+    totalTime += Math.max(marTime, 0);
+
+    // ===== OUTPUT =====
+    result.innerHTML = `
+        🪖 Total Troops: ${inf + lan + mar}<br><br>
+
+        🥩 Meat: ${totalMeat.toLocaleString()}<br>
+        🪵 Wood: ${totalWood.toLocaleString()}<br>
+        🔩 Iron: ${totalIron.toLocaleString()}<br><br>
+
+        ⚡ Power: ${totalPower.toLocaleString()}<br>
+        ⏱ Time (minutes): ${totalTime.toFixed(2)}
+    `;
+}
+
+</script>
+
+</body>
+</html>
 button {
     width: 100%;
     padding: 10px;
