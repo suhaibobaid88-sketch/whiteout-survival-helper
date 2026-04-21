@@ -35,6 +35,12 @@ h2, h3 {
     margin: 5px 0;
 }
 
+p {
+    margin: 8px 0 4px;
+    opacity: 0.8;
+    font-size: 14px;
+}
+
 input {
     width: 100%;
     padding: 8px;
@@ -72,21 +78,22 @@ button {
 
 <button class="back" onclick="goBack()">⬅ Back</button>
 
-<h2>Troops Calculator</h2>
+<h2>🔥 WOS Troops Calculator</h2>
 
-<!-- INFANTRY -->
+<!-- ================= INFANTRY ================= -->
 <div class="card">
-<h3>Infantry</h3>
+<h3>🪖 Infantry</h3>
 
-<input id="infNum" placeholder="Number of Infantry">
+<input id="infNum" placeholder="Enter number of Infantry">
 
-<h4>Cost per 1 Infantry</h4>
+<p>💰 Cost per 1 Infantry</p>
 <input id="infMeat" placeholder="Meat per troop">
 <input id="infWood" placeholder="Wood per troop">
 <input id="infIron" placeholder="Iron per troop">
 <input id="infCoal" placeholder="Coal per troop">
 
-<input id="infTimeD" placeholder="Days per troop">
+<p>⏱ Training Time per 1 Infantry (DD / HH / MM / SS)</p>
+<input id="infTimeD" placeholder="Days">
 <input id="infTimeH" placeholder="Hours">
 <input id="infTimeM" placeholder="Minutes">
 <input id="infTimeS" placeholder="Seconds">
@@ -94,47 +101,49 @@ button {
 <input id="infPower" placeholder="Power per troop">
 </div>
 
-<!-- LANCER -->
+<!-- ================= LANCER ================= -->
 <div class="card">
-<h3>Lancer</h3>
+<h3>🐎 Lancer</h3>
 
-<input id="lanNum">
+<input id="lanNum" placeholder="Enter number of Lancer">
 
-<h4>Cost per 1 Lancer</h4>
-<input id="lanMeat">
-<input id="lanWood">
-<input id="lanIron">
-<input id="lanCoal">
+<p>💰 Cost per 1 Lancer</p>
+<input id="lanMeat" placeholder="Meat per troop">
+<input id="lanWood" placeholder="Wood per troop">
+<input id="lanIron" placeholder="Iron per troop">
+<input id="lanCoal" placeholder="Coal per troop">
 
-<input id="lanTimeD">
-<input id="lanTimeH">
-<input id="lanTimeM">
-<input id="lanTimeS">
+<p>⏱ Training Time per 1 Lancer (DD / HH / MM / SS)</p>
+<input id="lanTimeD" placeholder="Days">
+<input id="lanTimeH" placeholder="Hours">
+<input id="lanTimeM" placeholder="Minutes">
+<input id="lanTimeS" placeholder="Seconds">
 
-<input id="lanPower">
+<input id="lanPower" placeholder="Power per troop">
 </div>
 
-<!-- MARKSMAN -->
+<!-- ================= MARKSMAN ================= -->
 <div class="card">
-<h3>Marksman</h3>
+<h3>🎯 Marksman</h3>
 
-<input id="marNum">
+<input id="marNum" placeholder="Enter number of Marksman">
 
-<h4>Cost per 1 Marksman</h4>
-<input id="marMeat">
-<input id="marWood">
-<input id="marIron">
-<input id="marCoal">
+<p>💰 Cost per 1 Marksman</p>
+<input id="marMeat" placeholder="Meat per troop">
+<input id="marWood" placeholder="Wood per troop">
+<input id="marIron" placeholder="Iron per troop">
+<input id="marCoal" placeholder="Coal per troop">
 
-<input id="marTimeD">
-<input id="marTimeH">
-<input id="marTimeM">
-<input id="marTimeS">
+<p>⏱ Training Time per 1 Marksman (DD / HH / MM / SS)</p>
+<input id="marTimeD" placeholder="Days">
+<input id="marTimeH" placeholder="Hours">
+<input id="marTimeM" placeholder="Minutes">
+<input id="marTimeS" placeholder="Seconds">
 
-<input id="marPower">
+<input id="marPower" placeholder="Power per troop">
 </div>
 
-<button onclick="calc()">Calculate Total</button>
+<button onclick="calc()">⚡ Calculate Total</button>
 
 <div class="card result" id="result"></div>
 
@@ -143,91 +152,81 @@ button {
 
 <script>
 
-function toSeconds(d,h,m,s){
-    return (d*86400)+(h*3600)+(m*60)+Number(s);
+// ===== BACK =====
+function goBack(){
+    window.location.href = "more.html";
 }
 
-function formatTime(sec){
+// ===== TIME CONVERTER =====
+function toSeconds(d,h,m,s){
+    return (Number(d||0)*86400) +
+           (Number(h||0)*3600) +
+           (Number(m||0)*60) +
+           Number(s||0);
+}
+
+// ===== FORMAT TIME =====
+function format(sec){
     let d = Math.floor(sec/86400);
     sec %= 86400;
     let h = Math.floor(sec/3600);
     sec %= 3600;
     let m = Math.floor(sec/60);
     let s = sec % 60;
+
     return `${d}D ${h}H ${m}M ${s}S`;
 }
 
-function goBack(){
-    window.location.href = "more.html";
-}
-
+// ===== MAIN CALC =====
 function calc(){
 
     let totalMeat=0, totalWood=0, totalIron=0, totalCoal=0;
     let totalPower=0, totalTime=0;
 
-    function calcType(num, meat, wood, iron, coal, time, power){
+    function process(num, meat, wood, iron, coal, tD, tH, tM, tS, power){
 
-        num = +num.value || 0;
+        let n = Number(num.value||0);
 
-        let m = +meat.value || 0;
-        let w = +wood.value || 0;
-        let i = +iron.value || 0;
-        let c = +coal.value || 0;
+        let m = Number(meat.value||0);
+        let w = Number(wood.value||0);
+        let i = Number(iron.value||0);
+        let c = Number(coal.value||0);
 
-        let d = +time[0].value || 0;
-        let h = +time[1].value || 0;
-        let mm = +time[2].value || 0;
-        let s = +time[3].value || 0;
+        let time = toSeconds(tD.value, tH.value, tM.value, tS.value);
+        let p = Number(power.value||0);
 
-        let p = +power.value || 0;
+        totalMeat += n * m;
+        totalWood += n * w;
+        totalIron += n * i;
+        totalCoal += n * c;
 
-        let singleTime = toSeconds(d,h,mm,s);
-
-        totalMeat += num * m;
-        totalWood += num * w;
-        totalIron += num * i;
-        totalCoal += num * c;
-
-        totalPower += num * p;
-        totalTime += num * singleTime;
+        totalPower += n * p;
+        totalTime += n * time;
     }
 
     // INFANTRY
-    calcType(
-        infNum,
-        infMeat, infWood, infIron, infCoal,
-        [infTimeD, infTimeH, infTimeM, infTimeS],
-        infPower
-    );
+    process(infNum, infMeat, infWood, infIron, infCoal,
+            infTimeD, infTimeH, infTimeM, infTimeS, infPower);
 
     // LANCER
-    calcType(
-        lanNum,
-        lanMeat, lanWood, lanIron, lanCoal,
-        [lanTimeD, lanTimeH, lanTimeM, lanTimeS],
-        lanPower
-    );
+    process(lanNum, lanMeat, lanWood, lanIron, lanCoal,
+            lanTimeD, lanTimeH, lanTimeM, lanTimeS, lanPower);
 
     // MARKSMAN
-    calcType(
-        marNum,
-        marMeat, marWood, marIron, marCoal,
-        [marTimeD, marTimeH, marTimeM, marTimeS],
-        marPower
-    );
+    process(marNum, marMeat, marWood, marIron, marCoal,
+            marTimeD, marTimeH, marTimeM, marTimeS, marPower);
 
     document.getElementById("result").innerText = `
-TOTAL RESULTS
+📊 TOTAL RESULTS
 
-🥩 Meat: ${totalMeat}
-🪵 Wood: ${totalWood}
-🔩 Iron: ${totalIron}
-🪨 Coal: ${totalCoal}
+🥩 Meat: ${totalMeat.toLocaleString()}
+🪵 Wood: ${totalWood.toLocaleString()}
+🔩 Iron: ${totalIron.toLocaleString()}
+🪨 Coal: ${totalCoal.toLocaleString()}
 
-⚡ Power: ${totalPower}
+⚡ Power: ${totalPower.toLocaleString()}
 
-⏱ Time: ${formatTime(totalTime)}
+⏱ Time: ${format(totalTime)}
 `;
 }
 
