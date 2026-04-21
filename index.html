@@ -12,7 +12,6 @@ body {
   overflow: hidden;
   color: white;
 
-  /* ===== BACKGROUND FIX ===== */
   background-image: url('KSA.png');
   background-size: cover;
   background-position: center;
@@ -47,9 +46,40 @@ body {
   overflow-y: auto;
 }
 
+/* ===== HEADER WITH BUTTON ===== */
+.header-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.header-bar h2 {
+  margin: 0;
+}
+
+/* ===== EVENTS BUTTON ===== */
+.events-btn {
+  position: absolute;
+  right: 10px;
+  padding: 6px 12px;
+  border: none;
+  border-radius: 6px;
+  background: rgba(255,215,0,0.8);
+  color: black;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.events-btn:hover {
+  background: gold;
+  transform: scale(1.05);
+}
+
 /* ===== TITLES ===== */
-h2 {
-  text-align: center;
+h3 {
+  text-align: left;
 }
 
 /* ===== BOX ===== */
@@ -96,7 +126,14 @@ h2 {
   <!-- LEFT -->
   <div class="panel">
 
-    <h2>Alliance Members</h2>
+    <!-- HEADER + BUTTON -->
+    <div class="header-bar">
+      <h2>Alliance Members</h2>
+
+      <button class="events-btn" onclick="location.href='events.html'">
+        Events
+      </button>
+    </div>
 
     <h3>R5 (Leader)</h3>
     <div id="r5" class="box r5" contenteditable="true"></div>
