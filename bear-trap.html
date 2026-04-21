@@ -12,7 +12,6 @@ body {
     background: url("Bear.png") center/cover no-repeat;
 }
 
-/* overlay */
 .overlay {
     background: rgba(0,0,0,0.6);
     min-height: 100vh;
@@ -25,7 +24,7 @@ body {
     gap: 10px;
     flex-wrap: wrap;
     justify-content: center;
-    margin-bottom: 20px;
+    margin-bottom: 15px;
 }
 
 button, input {
@@ -35,42 +34,29 @@ button, input {
     background: rgba(255,255,255,0.2);
     color: white;
     cursor: pointer;
-    backdrop-filter: blur(6px);
 }
 
-button:hover {
-    transform: scale(1.05);
-}
-
-/* canvas */
 .canvas {
     width: 100%;
     height: 70vh;
     border: 2px dashed rgba(255,255,255,0.3);
     position: relative;
-    overflow: hidden;
 }
 
 /* shapes */
 .shape {
     position: absolute;
-    width: 80px;
-    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: white;
     cursor: move;
     user-select: none;
+    color: white;
+    font-size: 14px;
 }
 
-.square {
-    border-radius: 5px;
-}
-
-.circle {
-    border-radius: 50%;
-}
+.square { border-radius: 6px; }
+.circle { border-radius: 50%; }
 
 .selected {
     outline: 3px solid yellow;
@@ -83,10 +69,19 @@ button:hover {
 <div class="overlay">
 
 <div class="toolbar">
-    <button onclick="addShape('square')">⬛ Square</button>
-    <button onclick="addShape('circle')">⚪ Circle</button>
-    <input type="color" id="colorPicker">
-    <button onclick="deleteShape()">🗑 Delete</button>
+    <button onclick="addShape('square')">⬛</button>
+    <button onclick="addShape('circle')">⚪</button>
+
+    <input type="color" id="shapeColor">
+    <input type="range" id="opacity" min="0" max="1" step="0.1" value="0.7">
+    
+    <input type="color" id="textColor">
+
+    <button onclick="resize(10)">➕ Size</button>
+    <button onclick="resize(-10)">➖ Size</button>
+
+    <button onclick="save()">💾 Save</button>
+    <button onclick="deleteShape()">🗑</button>
 </div>
 
 <div class="canvas" id="canvas"></div>
@@ -95,59 +90,145 @@ button:hover {
 
 <script>
 let selected = null;
+let shapes = [];
 
-// add shape
+// ADD
 function addShape(type) {
-    const shape = document.createElement("div");
-    shape.classList.add("shape", type);
-    shape.style.background = document.getElementById("colorPicker").value || "red";
-    shape.style.left = "50px";
-    shape.style.top = "50px";
-    shape.contentEditable = true;
-    shape.innerText = "Text";
-
-    // select
-    shape.onclick = (e) => {
-        e.stopPropagation();
-        if (selected) selected.classList.remove("selected");
-        selected = shape;
-        shape.classList.add("selected");
+    let shape = {
+        type,
+        x: 50,
+        y: 50,
+        w: 80,
+        h: 80,
+        text: "Name",
+        bg: "#ff0000",
+        opacity: 0.7,
+        color: "#ffffff"
     };
-
-    // drag
-    let offsetX, offsetY;
-    shape.onmousedown = (e) => {
-        offsetX = e.offsetX;
-        offsetY = e.offsetY;
-
-        function move(e) {
-            shape.style.left = (e.pageX - offsetX) + "px";
-            shape.style.top = (e.pageY - offsetY) + "px";
-        }
-
-        document.addEventListener("mousemove", move);
-
-        document.onmouseup = () => {
-            document.removeEventListener("mousemove", move);
-        };
-    };
-
-    document.getElementById("canvas").appendChild(shape);
+    shapes.push(shape);
+    render();
 }
 
-// delete
-function deleteShape() {
-    if (selected) {
-        selected.remove();
-        selected = null;
+// RENDER
+function render() {
+    const canvas = document.getElementById("canvas");
+    canvas.innerHTML = "";
+
+    shapes.forEach((s, i) => {
+        let div = document.createElement("div");
+        div.className = `shape ${s.type}`;
+        div.style.left = s.x + "px";
+        div.style.top = s.y + "px";
+        div.style.width = s.w + "px";
+        div.style.height = s.h + "px";
+
+        div.style.background = hexToRgba(s.bg, s.opacity);
+        div.style.color = s.color;
+
+        div.contentEditable = true;
+        div.innerText = s.text;
+
+        div.onclick = (e) => {
+            e.stopPropagation();
+            selected = i;
+            render();
+        };
+
+        div.oninput = () => {
+            shapes[i].text = div.innerText;
+        };
+
+        // DRAG
+        div.onmousedown = (e) => {
+            let offsetX = e.offsetX;
+            let offsetY = e.offsetY;
+
+            function move(e) {
+                shapes[i].x = e.pageX - offsetX;
+                shapes[i].y = e.pageY - offsetY;
+                render();
+            }
+
+            document.addEventListener("mousemove", move);
+            document.onmouseup = () => {
+                document.removeEventListener("mousemove", move);
+            };
+        };
+
+        if (i === selected) div.classList.add("selected");
+
+        canvas.appendChild(div);
+    });
+}
+
+// COLOR SHAPE
+document.getElementById("shapeColor").oninput = function() {
+    if (selected != null) {
+        shapes[selected].bg = this.value;
+        render();
+    }
+};
+
+// OPACITY
+document.getElementById("opacity").oninput = function() {
+    if (selected != null) {
+        shapes[selected].opacity = this.value;
+        render();
+    }
+};
+
+// TEXT COLOR
+document.getElementById("textColor").oninput = function() {
+    if (selected != null) {
+        shapes[selected].color = this.value;
+        render();
+    }
+};
+
+// RESIZE
+function resize(val) {
+    if (selected != null) {
+        shapes[selected].w += val;
+        shapes[selected].h += val;
+        render();
     }
 }
 
-// deselect
+// DELETE
+function deleteShape() {
+    if (selected != null) {
+        shapes.splice(selected, 1);
+        selected = null;
+        render();
+    }
+}
+
+// SAVE
+function save() {
+    localStorage.setItem("bearMap", JSON.stringify(shapes));
+}
+
+// LOAD
+function load() {
+    let data = localStorage.getItem("bearMap");
+    if (data) shapes = JSON.parse(data);
+    render();
+}
+
+// HELPER
+function hexToRgba(hex, opacity) {
+    let r = parseInt(hex.substr(1,2),16);
+    let g = parseInt(hex.substr(3,2),16);
+    let b = parseInt(hex.substr(5,2),16);
+    return `rgba(${r},${g},${b},${opacity})`;
+}
+
 document.getElementById("canvas").onclick = () => {
-    if (selected) selected.classList.remove("selected");
     selected = null;
+    render();
 };
+
+load();
 </script>
 
 </body>
