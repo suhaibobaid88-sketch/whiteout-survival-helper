@@ -1,1 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Resource Calculator</title>
+<style>
+body {
+    font-family: Arial;
+    background: url("Clk.png") center/cover no-repeat;
+    color: white;
+    padding: 20px;
+}
 
+.box {
+    background: rgba(0,0,0,0.6);
+    padding: 15px;
+    border-radius: 10px;
+    width: 300px;
+}
+
+input, button {
+    width: 100%;
+    padding: 8px;
+    margin: 5px 0;
+    border-radius: 6px;
+    border: none;
+}
+
+button {
+    cursor: pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="box">
+
+<h3>Resource Calculator</h3>
+
+<label>Total Time (minutes)</label>
+<input id="totalTime" type="number" placeholder="e.g 120">
+
+<label>Cycle Time (minutes)</label>
+<input id="cycleTime" type="number" placeholder="e.g 10">
+
+<label>Production per Cycle</label>
+<input id="production" type="number" placeholder="e.g 700000">
+
+<button onclick="calc()">Calculate</button>
+
+<h4 id="result"></h4>
+
+</div>
+
+<script>
+function calc() {
+
+    let total = Number(document.getElementById("totalTime").value);
+    let cycle = Number(document.getElementById("cycleTime").value);
+    let prod = Number(document.getElementById("production").value);
+
+    if (!total || !cycle || !prod) {
+        document.getElementById("result").innerHTML = "❌ Fill all fields";
+        return;
+    }
+
+    let cycles = Math.floor(total / cycle);
+    let result = cycles * prod;
+
+    document.getElementById("result").innerHTML = `
+        ⏱ Cycles: ${cycles}<br>
+        📦 Total Production: ${result.toLocaleString()}
+    `;
+}
+</script>
+
+</body>
+</html>
