@@ -2,71 +2,79 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>WOS Troops Calculator</title>
+<title>WOS Calculator Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
-body {
-    margin: 0;
-    font-family: Arial;
-    background: url("Clk.png") center/cover no-repeat;
-    color: white;
+body{
+    margin:0;
+    font-family:Arial;
+    background:url("Clk.png") center/cover no-repeat;
+    color:white;
 }
 
-.overlay {
-    background: rgba(0,0,0,0.75);
-    min-height: 100vh;
-    padding: 15px;
+.overlay{
+    background:rgba(0,0,0,0.75);
+    min-height:100vh;
+    padding:15px;
 }
 
-.container {
-    max-width: 900px;
-    margin: auto;
+.container{
+    max-width:900px;
+    margin:auto;
 }
 
-.card {
-    background: rgba(255,255,255,0.08);
-    padding: 15px;
-    border-radius: 12px;
-    margin-bottom: 15px;
+.card{
+    background:rgba(255,255,255,0.08);
+    padding:12px;
+    border-radius:12px;
+    margin-bottom:12px;
 }
 
-h2, h3 {
-    margin: 5px 0;
+h3{
+    margin:5px 0 10px;
 }
 
-p {
-    margin: 8px 0 4px;
-    opacity: 0.8;
-    font-size: 14px;
+/* 🔥 GRID SYSTEM (هذا سر الشكل الحلو) */
+.row{
+    display:grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    gap:6px;
+    margin-bottom:6px;
 }
 
-input {
-    width: 100%;
-    padding: 8px;
-    margin: 4px 0;
-    border: none;
-    border-radius: 6px;
+.row-2{
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    gap:6px;
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    margin-top: 10px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    background: rgba(255,255,255,0.2);
-    color: white;
+input{
+    width:100%;
+    padding:6px;
+    border:none;
+    border-radius:6px;
+    font-size:13px;
 }
 
-.result {
-    white-space: pre-line;
-    line-height: 1.6;
+.small{
+    font-size:12px;
+    opacity:0.8;
 }
 
-.back {
-    margin-bottom: 10px;
+button{
+    width:100%;
+    padding:10px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    background:rgba(255,255,255,0.2);
+    color:white;
+}
+
+.result{
+    white-space:pre-line;
+    margin-top:10px;
 }
 </style>
 </head>
@@ -76,27 +84,31 @@ button {
 <div class="overlay">
 <div class="container">
 
-<button class="back" onclick="goBack()">⬅ Back</button>
-
-<h2>🔥 WOS Troops Calculator</h2>
+<h2>🔥 WOS Troops Calculator PRO</h2>
 
 <!-- ================= INFANTRY ================= -->
 <div class="card">
 <h3>🪖 Infantry</h3>
 
-<input id="infNum" placeholder="Enter number of Infantry">
+<input id="infNum" placeholder="Troops Number">
 
-<p>💰 Cost per 1 Infantry</p>
-<input id="infMeat" placeholder="Meat per troop">
-<input id="infWood" placeholder="Wood per troop">
-<input id="infIron" placeholder="Iron per troop">
-<input id="infCoal" placeholder="Coal per troop">
+<div class="small">💰 Cost per troop</div>
+<div class="row-2">
+<input id="infMeat" placeholder="Meat">
+<input id="infWood" placeholder="Wood">
+</div>
+<div class="row-2">
+<input id="infIron" placeholder="Iron">
+<input id="infCoal" placeholder="Coal">
+</div>
 
-<p>⏱ Training Time per 1 Infantry (DD / HH / MM / SS)</p>
-<input id="infTimeD" placeholder="Days">
-<input id="infTimeH" placeholder="Hours">
-<input id="infTimeM" placeholder="Minutes">
-<input id="infTimeS" placeholder="Seconds">
+<div class="small">⏱ Time per troop (D / H / M / S)</div>
+<div class="row">
+<input id="infD" placeholder="Days">
+<input id="infH" placeholder="Hours">
+<input id="infM" placeholder="Min">
+<input id="infS" placeholder="Sec">
+</div>
 
 <input id="infPower" placeholder="Power per troop">
 </div>
@@ -105,19 +117,23 @@ button {
 <div class="card">
 <h3>🐎 Lancer</h3>
 
-<input id="lanNum" placeholder="Enter number of Lancer">
+<input id="lanNum" placeholder="Troops Number">
 
-<p>💰 Cost per 1 Lancer</p>
-<input id="lanMeat" placeholder="Meat per troop">
-<input id="lanWood" placeholder="Wood per troop">
-<input id="lanIron" placeholder="Iron per troop">
-<input id="lanCoal" placeholder="Coal per troop">
+<div class="row-2">
+<input id="lanMeat" placeholder="Meat">
+<input id="lanWood" placeholder="Wood">
+</div>
+<div class="row-2">
+<input id="lanIron" placeholder="Iron">
+<input id="lanCoal" placeholder="Coal">
+</div>
 
-<p>⏱ Training Time per 1 Lancer (DD / HH / MM / SS)</p>
-<input id="lanTimeD" placeholder="Days">
-<input id="lanTimeH" placeholder="Hours">
-<input id="lanTimeM" placeholder="Minutes">
-<input id="lanTimeS" placeholder="Seconds">
+<div class="row">
+<input id="lanD" placeholder="D">
+<input id="lanH" placeholder="H">
+<input id="lanM" placeholder="M">
+<input id="lanS" placeholder="S">
+</div>
 
 <input id="lanPower" placeholder="Power per troop">
 </div>
@@ -126,24 +142,28 @@ button {
 <div class="card">
 <h3>🎯 Marksman</h3>
 
-<input id="marNum" placeholder="Enter number of Marksman">
+<input id="marNum" placeholder="Troops Number">
 
-<p>💰 Cost per 1 Marksman</p>
-<input id="marMeat" placeholder="Meat per troop">
-<input id="marWood" placeholder="Wood per troop">
-<input id="marIron" placeholder="Iron per troop">
-<input id="marCoal" placeholder="Coal per troop">
+<div class="row-2">
+<input id="marMeat" placeholder="Meat">
+<input id="marWood" placeholder="Wood">
+</div>
+<div class="row-2">
+<input id="marIron" placeholder="Iron">
+<input id="marCoal" placeholder="Coal">
+</div>
 
-<p>⏱ Training Time per 1 Marksman (DD / HH / MM / SS)</p>
-<input id="marTimeD" placeholder="Days">
-<input id="marTimeH" placeholder="Hours">
-<input id="marTimeM" placeholder="Minutes">
-<input id="marTimeS" placeholder="Seconds">
+<div class="row">
+<input id="marD" placeholder="D">
+<input id="marH" placeholder="H">
+<input id="marM" placeholder="M">
+<input id="marS" placeholder="S">
+</div>
 
 <input id="marPower" placeholder="Power per troop">
 </div>
 
-<button onclick="calc()">⚡ Calculate Total</button>
+<button onclick="calc()">⚡ CALCULATE</button>
 
 <div class="card result" id="result"></div>
 
@@ -152,82 +172,59 @@ button {
 
 <script>
 
-// ===== BACK =====
-function goBack(){
-    window.location.href = "more.html";
-}
-
-// ===== TIME CONVERTER =====
 function toSeconds(d,h,m,s){
-    return (Number(d||0)*86400) +
-           (Number(h||0)*3600) +
-           (Number(m||0)*60) +
-           Number(s||0);
+    return (d*86400)+(h*3600)+(m*60)+Number(s);
 }
 
-// ===== FORMAT TIME =====
 function format(sec){
-    let d = Math.floor(sec/86400);
-    sec %= 86400;
-    let h = Math.floor(sec/3600);
-    sec %= 3600;
-    let m = Math.floor(sec/60);
-    let s = sec % 60;
-
+    let d=Math.floor(sec/86400);
+    sec%=86400;
+    let h=Math.floor(sec/3600);
+    sec%=3600;
+    let m=Math.floor(sec/60);
+    let s=sec%60;
     return `${d}D ${h}H ${m}M ${s}S`;
 }
 
-// ===== MAIN CALC =====
 function calc(){
 
-    let totalMeat=0, totalWood=0, totalIron=0, totalCoal=0;
-    let totalPower=0, totalTime=0;
+let totalM=0,totalW=0,totalI=0,totalC=0,totalP=0,totalT=0;
 
-    function process(num, meat, wood, iron, coal, tD, tH, tM, tS, power){
+function run(num,m,w,i,c,d,h,mi,s,p){
 
-        let n = Number(num.value||0);
+    let n=+num.value||0;
 
-        let m = Number(meat.value||0);
-        let w = Number(wood.value||0);
-        let i = Number(iron.value||0);
-        let c = Number(coal.value||0);
+    totalM += n*(+m.value||0);
+    totalW += n*(+w.value||0);
+    totalI += n*(+i.value||0);
+    totalC += n*(+c.value||0);
 
-        let time = toSeconds(tD.value, tH.value, tM.value, tS.value);
-        let p = Number(power.value||0);
+    totalP += n*(+p.value||0);
 
-        totalMeat += n * m;
-        totalWood += n * w;
-        totalIron += n * i;
-        totalCoal += n * c;
+    let t=toSeconds(+d.value||0,+h.value||0,+mi.value||0,+s.value||0);
+    totalT += n*t;
+}
 
-        totalPower += n * p;
-        totalTime += n * time;
-    }
+// Infantry
+run(infNum,infMeat,infWood,infIron,infCoal,infD,infH,infM,infS,infPower);
 
-    // INFANTRY
-    process(infNum, infMeat, infWood, infIron, infCoal,
-            infTimeD, infTimeH, infTimeM, infTimeS, infPower);
+// Lancer
+run(lanNum,lanMeat,lanWood,lanIron,lanCoal,lanD,lanH,lanM,lanS,lanPower);
 
-    // LANCER
-    process(lanNum, lanMeat, lanWood, lanIron, lanCoal,
-            lanTimeD, lanTimeH, lanTimeM, lanTimeS, lanPower);
+// Marksman
+run(marNum,marMeat,marWood,marIron,marCoal,marD,marH,marM,marS,marPower);
 
-    // MARKSMAN
-    process(marNum, marMeat, marWood, marIron, marCoal,
-            marTimeD, marTimeH, marTimeM, marTimeS, marPower);
+result.innerText=
+`📊 TOTAL RESULT
 
-    document.getElementById("result").innerText = `
-📊 TOTAL RESULTS
+🥩 Meat: ${totalM}
+🪵 Wood: ${totalW}
+🔩 Iron: ${totalI}
+🪨 Coal: ${totalC}
 
-🥩 Meat: ${totalMeat.toLocaleString()}
-🪵 Wood: ${totalWood.toLocaleString()}
-🔩 Iron: ${totalIron.toLocaleString()}
-🪨 Coal: ${totalCoal.toLocaleString()}
+⚡ Power: ${totalP}
 
-⚡ Power: ${totalPower.toLocaleString()}
-
-⏱ Time: ${format(totalTime)}
-`;
+⏱ Time: ${format(totalT)}`;
 }
 
 </script>
