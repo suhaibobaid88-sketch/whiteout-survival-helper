@@ -78,6 +78,10 @@ button, input {
 <div class="overlay">
 
 <div class="toolbar">
+
+    <!-- BACK BUTTON -->
+    <button onclick="goBack()">⬅ Back</button>
+
     <button onclick="addShape('square')">⬛</button>
     <button onclick="addShape('circle')">⚪</button>
 
@@ -103,6 +107,11 @@ button, input {
 let shapes = [];
 let selected = null;
 const grid = 40;
+
+// BACK
+function goBack() {
+    window.location.href = "more.html";
+}
 
 // ADD
 function addShape(type) {
@@ -140,19 +149,16 @@ function render() {
         el.contentEditable = true;
         el.innerText = s.text;
 
-        // SELECT
         el.onclick = (e) => {
             e.stopPropagation();
             selected = i;
             render();
         };
 
-        // TEXT EDIT
         el.oninput = () => {
             shapes[i].text = el.innerText;
         };
 
-        // DRAG
         el.onmousedown = (e) => {
             let offsetX = e.offsetX;
             let offsetY = e.offsetY;
@@ -169,7 +175,6 @@ function render() {
             };
         };
 
-        // RESIZE HANDLE
         let r = document.createElement("div");
         r.className = "resizer";
 
@@ -201,7 +206,7 @@ function snap(v) {
     return Math.round(v / grid) * grid;
 }
 
-// SHAPE SIZE BUTTONS
+// SIZE
 function resize(val) {
     if (selected != null) {
         shapes[selected].w += val;
@@ -210,7 +215,7 @@ function resize(val) {
     }
 }
 
-// FONT SIZE
+// FONT
 function fontSize(val) {
     if (selected != null) {
         shapes[selected].font += val;
