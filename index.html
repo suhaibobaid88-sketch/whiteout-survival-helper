@@ -1,109 +1,49 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<title>Whiteout Survival Helper</title>
+<div class="panel">
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  color: white;
+  <h2>Alliance Members</h2>
 
-  /* الخلفية */
-  background-image: url('KSA.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  min-height: 100vh;
-}
+  <!-- R5 -->
+  <h3>R5</h3>
+  <input id="r5input" placeholder="Enter R5 name">
+  <button onclick="saveR5()">Save</button>
+  <div id="r5show"></div>
 
-/* يمين الصفحة للجدول */
-.content {
-  position: absolute;
-  top: 20px;
-  right: 20px;
-  width: 400px;
-}
+  <hr>
 
-/* عنوان */
-h1 {
-  text-align: center;
-  background: rgba(0,0,0,0.4);
-  padding: 10px;
-  border-radius: 10px;
-}
-
-/* صناديق الأعضاء */
-.box {
-  padding: 5px;
-  margin: 3px;
-  border-radius: 5px;
-}
-
-/* ألوان شفافة */
-.r5 { background: rgba(255,215,0,0.5); color: black; }
-.r4 { background: rgba(255,165,0,0.5); color: black; }
-.r3 { background: rgba(77,184,255,0.4); color: black; }
-.r2 { background: rgba(144,238,144,0.4); color: black; }
-.r1 { background: rgba(128,128,128,0.4); color: white; }
-
-.grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: 5px;
-}
-</style>
-
-</head>
-
-<body>
-
-<!-- الجدول يمين -->
-<div class="content">
-
-  <h1>Alliance Members</h1>
-
-  <h2 style="color:gold;">R5 (Leader)</h2>
-  <div class="box r5">R5 NAME</div>
-
-  <h2 style="color:orange;">R4</h2>
-  <div class="grid">
-    <script>
-      for(let i=1;i<=20;i++){
-        document.write(`<div class="box r4">R4 ${i}</div>`);
-      }
-    </script>
-  </div>
-
-  <h2 style="color:#4db8ff;">R3</h2>
-  <div class="grid">
-    <script>
-      for(let i=1;i<=20;i++){
-        document.write(`<div class="box r3">R3 ${i}</div>`);
-      }
-    </script>
-  </div>
-
-  <h2 style="color:lightgreen;">R2</h2>
-  <div class="grid">
-    <script>
-      for(let i=1;i<=20;i++){
-        document.write(`<div class="box r2">R2 ${i}</div>`);
-      }
-    </script>
-  </div>
-
-  <h2 style="color:gray;">R1</h2>
-  <div class="grid">
-    <script>
-      for(let i=1;i<=20;i++){
-        document.write(`<div class="box r1">R1 ${i}</div>`);
-      }
-    </script>
-  </div>
+  <h3>R4</h3>
+  <div id="r4list"></div>
 
 </div>
 
-</body>
-</html>
+<script>
+/* ====== R5 ====== */
+function saveR5(){
+  let name = document.getElementById("r5input").value;
+  localStorage.setItem("r5", name);
+  loadData();
+}
+
+/* ====== R4 ====== */
+function addR4(){
+  let list = JSON.parse(localStorage.getItem("r4") || "[]");
+  list.push("R4 Member");
+  localStorage.setItem("r4", JSON.stringify(list));
+  loadData();
+}
+
+/* ====== تحميل البيانات ====== */
+function loadData(){
+
+  // R5
+  let r5 = localStorage.getItem("r5") || "No R5";
+  document.getElementById("r5show").innerHTML = r5;
+
+  // R4
+  let r4 = JSON.parse(localStorage.getItem("r4") || "[]");
+  document.getElementById("r4list").innerHTML =
+    r4.map((n,i)=>`<div>${n} ${i+1}</div>`).join("");
+
+}
+
+loadData();
+</script>
