@@ -1,1 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Island of the Week</title>
 
+<style>
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+
+  background-image: url('Island.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
+
+/* طبقة شفافة */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+}
+
+/* الحاوية */
+.container {
+  position: relative;
+  z-index: 2;
+  padding: 20px;
+}
+
+/* زر الرجوع */
+.back-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+  padding: 10px 15px;
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.3);
+
+  color: white;
+  text-decoration: none;
+
+  backdrop-filter: blur(6px);
+}
+
+/* الجدول */
+table {
+  width: 100%;
+  max-width: 700px;
+  margin: 60px auto;
+  border-collapse: collapse;
+
+  background: rgba(255,255,255,0.1);
+  backdrop-filter: blur(6px);
+}
+
+/* الخلايا */
+th, td {
+  border: 1px solid rgba(255,255,255,0.2);
+  padding: 10px;
+  text-align: center;
+  color: white;
+}
+
+/* العناوين */
+th {
+  background: rgba(255,255,255,0.2);
+}
+
+/* الخلايا القابلة للتعديل */
+td {
+  cursor: pointer;
+}
+
+td:focus {
+  outline: none;
+  background: rgba(255,255,255,0.2);
+}
+
+/* موبايل */
+@media (max-width: 600px) {
+  th, td {
+    padding: 6px;
+    font-size: 12px;
+  }
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<a class="back-btn" href="more.html">⬅ Back</a>
+
+<div class="container">
+
+<table id="table">
+  <tr>
+    <th>Name</th>
+    <th>Done / No</th>
+  </tr>
+</table>
+
+</div>
+
+<script>
+const table = document.getElementById("table");
+
+/* إنشاء 100 صف */
+for (let i = 0; i < 100; i++) {
+  let row = table.insertRow();
+
+  let cell1 = row.insertCell(0);
+  let cell2 = row.insertCell(1);
+
+  cell1.contentEditable = true;
+  cell2.contentEditable = true;
+
+  /* تحميل البيانات */
+  cell1.innerText = localStorage.getItem("name_" + i) || "";
+  cell2.innerText = localStorage.getItem("done_" + i) || "";
+
+  /* حفظ تلقائي */
+  cell1.addEventListener("input", () => {
+    localStorage.setItem("name_" + i, cell1.innerText);
+  });
+
+  cell2.addEventListener("input", () => {
+    localStorage.setItem("done_" + i, cell2.innerText);
+  });
+}
+</script>
+
+</body>
+</html>
