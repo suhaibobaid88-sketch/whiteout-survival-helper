@@ -2,77 +2,117 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Resource Calculator</title>
+<title>WOS Resource Calculator</title>
+
 <style>
 body {
+    margin: 0;
     font-family: Arial;
     background: url("Clk.png") center/cover no-repeat;
     color: white;
+}
+
+.overlay {
+    background: rgba(0,0,0,0.7);
+    min-height: 100vh;
     padding: 20px;
 }
 
 .box {
-    background: rgba(0,0,0,0.6);
+    max-width: 500px;
+    margin: auto;
+    background: rgba(255,255,255,0.08);
     padding: 15px;
-    border-radius: 10px;
-    width: 300px;
+    border-radius: 12px;
 }
 
-input, button {
+input {
     width: 100%;
-    padding: 8px;
     margin: 5px 0;
+    padding: 8px;
     border-radius: 6px;
     border: none;
 }
 
 button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 8px;
     cursor: pointer;
+}
+
+.result {
+    margin-top: 10px;
+    line-height: 1.6;
 }
 </style>
 </head>
 
 <body>
 
+<div class="overlay">
+
 <div class="box">
 
-<h3>Resource Calculator</h3>
+<h2>Resource Calculator</h2>
 
-<label>Total Time (minutes)</label>
-<input id="totalTime" type="number" placeholder="e.g 120">
+<label>Total Time (HH:MM:SS)</label>
+<input id="totalTime" value="02:00:00">
 
-<label>Cycle Time (minutes)</label>
-<input id="cycleTime" type="number" placeholder="e.g 10">
+<label>Cycle Time (HH:MM:SS)</label>
+<input id="cycleTime" value="00:10:00">
 
-<label>Production per Cycle</label>
-<input id="production" type="number" placeholder="e.g 700000">
+<hr>
+
+<h3>Production per Cycle</h3>
+
+<input id="wood" placeholder="Wood per cycle" value="0">
+<input id="iron" placeholder="Iron per cycle" value="700000">
+<input id="coal" placeholder="Coal per cycle" value="0">
+<input id="meat" placeholder="Meat per cycle" value="0">
 
 <button onclick="calc()">Calculate</button>
 
-<h4 id="result"></h4>
+<div class="result" id="result"></div>
+
+</div>
 
 </div>
 
 <script>
+
+// تحويل HH:MM:SS إلى دقائق
+function toMinutes(t) {
+    let [h,m,s] = t.split(":").map(Number);
+    return (h*60) + m + (s/60);
+}
+
 function calc() {
 
-    let total = Number(document.getElementById("totalTime").value);
-    let cycle = Number(document.getElementById("cycleTime").value);
-    let prod = Number(document.getElementById("production").value);
+    let total = toMinutes(document.getElementById("totalTime").value);
+    let cycle = toMinutes(document.getElementById("cycleTime").value);
 
-    if (!total || !cycle || !prod) {
-        document.getElementById("result").innerHTML = "❌ Fill all fields";
-        return;
-    }
+    if (cycle <= 0) return;
 
     let cycles = Math.floor(total / cycle);
-    let result = cycles * prod;
+
+    let wood = cycles * Number(document.getElementById("wood").value);
+    let iron = cycles * Number(document.getElementById("iron").value);
+    let coal = cycles * Number(document.getElementById("coal").value);
+    let meat = cycles * Number(document.getElementById("meat").value);
 
     document.getElementById("result").innerHTML = `
-        ⏱ Cycles: ${cycles}<br>
-        📦 Total Production: ${result.toLocaleString()}
+        ⏱ Cycles: ${cycles}<br><br>
+
+        🪵 Wood: ${wood.toLocaleString()}<br>
+        🔩 Iron: ${iron.toLocaleString()}<br>
+        🪨 Coal: ${coal.toLocaleString()}<br>
+        🥩 Meat: ${meat.toLocaleString()}
     `;
 }
+
 </script>
 
 </body>
