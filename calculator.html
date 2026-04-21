@@ -65,18 +65,18 @@ h3 {
     margin: 12px 0 6px;
 }
 
-/* ===== GRID (SPACING IMPROVED) ===== */
+/* ===== GRID ===== */
 .grid2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 12px; /* 👈 زودنا المسافة */
+    gap: 12px;
     margin-bottom: 6px;
 }
 
 .grid4 {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
-    gap: 12px; /* 👈 زودنا المسافة */
+    gap: 12px;
     margin-bottom: 6px;
 }
 
@@ -92,7 +92,10 @@ input {
     outline: none;
 }
 
-/* توسيط وقت (أوضح بصريًا) */
+input::placeholder {
+    color: rgba(255,255,255,0.5);
+}
+
 .grid4 input {
     text-align: center;
 }
@@ -170,6 +173,7 @@ button {
 
 <input id="lanNum" placeholder="Troops Number">
 
+<div class="label">💰 Cost per troop</div>
 <div class="grid2">
 <input id="lanMeat" placeholder="Meat">
 <input id="lanWood" placeholder="Wood">
@@ -197,6 +201,7 @@ button {
 
 <input id="marNum" placeholder="Troops Number">
 
+<div class="label">💰 Cost per troop</div>
 <div class="grid2">
 <input id="marMeat" placeholder="Meat">
 <input id="marWood" placeholder="Wood">
@@ -248,10 +253,13 @@ function format(sec){
 function calc(){
 
 let M=0,W=0,I=0,C=0,P=0,T=0;
+let totalTroops = 0; // ✅ NEW
 
 function run(num,meat,wood,iron,coal,d,h,m,s,p){
 
     let n=+num.value||0;
+
+    totalTroops += n; // ✅ count troops
 
     M += n*(+meat.value||0);
     W += n*(+wood.value||0);
@@ -264,17 +272,19 @@ function run(num,meat,wood,iron,coal,d,h,m,s,p){
     T += n*time;
 }
 
-// Infantry
+// INFANTRY
 run(infNum,infMeat,infWood,infIron,infCoal,infD,infH,infM,infS,infPower);
 
-// Lancer
+// LANCER
 run(lanNum,lanMeat,lanWood,lanIron,lanCoal,lanD,lanH,lanM,lanS,lanPower);
 
-// Marksman
+// MARKSMAN
 run(marNum,marMeat,marWood,marIron,marCoal,marD,marH,marM,marS,marPower);
 
 result.innerText =
 `📊 TOTAL RESULT
+
+🪖 Total Troops: ${totalTroops}
 
 🥩 Meat: ${M}
 🪵 Wood: ${W}
