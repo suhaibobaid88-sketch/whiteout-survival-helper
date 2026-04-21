@@ -1,49 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Alliance System</title>
+
+<style>
+body {
+  margin: 0;
+  font-family: Arial;
+  background-image: url('KSA.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  height: 100vh;
+  overflow: hidden;
+  color: white;
+}
+
+/* اللوحة يمين */
+.panel {
+  position: absolute;
+  right: 20px;
+  top: 20px;
+  width: 450px;
+  height: 90vh;
+  background: rgba(0,0,0,0.35);
+  border-radius: 10px;
+  padding: 10px;
+  overflow-y: auto;
+}
+
+/* عنوان */
+h2 {
+  text-align: center;
+}
+
+/* الخانات */
+.box {
+  padding: 6px;
+  margin: 4px;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+/* ألوان شفافة */
+.r5 { background: rgba(255,215,0,0.5); color: black; }
+.r4 { background: rgba(255,165,0,0.4); color: black; }
+
+</style>
+</head>
+
+<body>
+
 <div class="panel">
 
   <h2>Alliance Members</h2>
 
   <!-- R5 -->
-  <h3>R5</h3>
-  <input id="r5input" placeholder="Enter R5 name">
-  <button onclick="saveR5()">Save</button>
-  <div id="r5show"></div>
+  <h3>R5 (Leader)</h3>
+  <div id="r5" class="box r5" contenteditable="true"></div>
 
   <hr>
 
+  <!-- R4 -->
   <h3>R4</h3>
-  <div id="r4list"></div>
+  <div id="r4"></div>
 
 </div>
 
 <script>
-/* ====== R5 ====== */
-function saveR5(){
-  let name = document.getElementById("r5input").value;
-  localStorage.setItem("r5", name);
-  loadData();
-}
 
-/* ====== R4 ====== */
-function addR4(){
-  let list = JSON.parse(localStorage.getItem("r4") || "[]");
-  list.push("R4 Member");
-  localStorage.setItem("r4", JSON.stringify(list));
-  loadData();
-}
-
-/* ====== تحميل البيانات ====== */
-function loadData(){
+/* تحميل البيانات */
+function load(){
 
   // R5
-  let r5 = localStorage.getItem("r5") || "No R5";
-  document.getElementById("r5show").innerHTML = r5;
+  let r5 = localStorage.getItem("r5") || "Click to set R5";
+  let r5box = document.getElementById("r5");
+  r5box.innerText = r5;
+
+  r5box.oninput = () => {
+    localStorage.setItem("r5", r5box.innerText);
+  };
 
   // R4
   let r4 = JSON.parse(localStorage.getItem("r4") || "[]");
-  document.getElementById("r4list").innerHTML =
-    r4.map((n,i)=>`<div>${n} ${i+1}</div>`).join("");
+  let container = document.getElementById("r4");
+  container.innerHTML = "";
 
+  for(let i=0;i<20;i++){
+    let name = r4[i] || "Click to edit";
+
+    container.innerHTML += `
+      <div class="box r4" contenteditable="true"
+      oninput="saveR4(${i}, this.innerText)">
+        ${name}
+      </div>
+    `;
+  }
 }
 
-loadData();
+/* حفظ R4 */
+function saveR4(i,value){
+  let r4 = JSON.parse(localStorage.getItem("r4") || "[]");
+  r4[i] = value;
+  localStorage.setItem("r4", JSON.stringify(r4));
+}
+
+/* تشغيل أول مرة */
+load();
+
 </script>
+
+</body>
+</html>
