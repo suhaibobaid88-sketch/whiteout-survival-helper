@@ -10,12 +10,8 @@ body {
   font-family: Arial, sans-serif;
   min-height: 100vh;
 
-  /* الخلفية */
-  background-image: url('Island.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-
+  /* خلفية احترافية */
+  background: url('Island.png') center/cover no-repeat fixed;
   position: relative;
 }
 
@@ -52,7 +48,6 @@ body::before {
   font-size: 14px;
 
   backdrop-filter: blur(6px);
-
   z-index: 9999;
 }
 
@@ -67,7 +62,7 @@ table {
   backdrop-filter: blur(6px);
 }
 
-/* العناوين والخلايا */
+/* الخلايا */
 th, td {
   border: 1px solid rgba(255,255,255,0.2);
   padding: 10px;
@@ -75,6 +70,7 @@ th, td {
   color: white;
 }
 
+/* رأس الجدول */
 th {
   background: rgba(255,255,255,0.2);
 }
@@ -86,7 +82,7 @@ td {
 
 td:focus {
   outline: none;
-  background: rgba(255,255,255,0.2);
+  background: rgba(255,255,255,0.25);
 }
 
 /* موبايل */
@@ -119,25 +115,27 @@ td:focus {
 <script>
 const table = document.getElementById("table");
 
-/* 100 صف */
+/* إنشاء 100 صف */
 for (let i = 0; i < 100; i++) {
   let row = table.insertRow();
 
-  let cell1 = row.insertCell(0);
-  let cell2 = row.insertCell(1);
+  let nameCell = row.insertCell(0);
+  let doneCell = row.insertCell(1);
 
-  cell1.contentEditable = true;
-  cell2.contentEditable = true;
+  nameCell.contentEditable = true;
+  doneCell.contentEditable = true;
 
-  cell1.innerText = localStorage.getItem("name_" + i) || "";
-  cell2.innerText = localStorage.getItem("done_" + i) || "";
+  /* تحميل البيانات */
+  nameCell.innerText = localStorage.getItem("name_" + i) || "";
+  doneCell.innerText = localStorage.getItem("done_" + i) || "";
 
-  cell1.addEventListener("input", () => {
-    localStorage.setItem("name_" + i, cell1.innerText);
+  /* حفظ تلقائي */
+  nameCell.addEventListener("input", () => {
+    localStorage.setItem("name_" + i, nameCell.innerText);
   });
 
-  cell2.addEventListener("input", () => {
-    localStorage.setItem("done_" + i, cell2.innerText);
+  doneCell.addEventListener("input", () => {
+    localStorage.setItem("done_" + i, doneCell.innerText);
   });
 }
 </script>
