@@ -2,77 +2,153 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Bear Trap</title>
+<title>Bear Trap Builder</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
 body {
     margin: 0;
-    background: #111;
-    color: white;
     font-family: Arial;
+    background: url("Bear.png") center/cover no-repeat;
 }
 
-.wrapper {
+/* overlay */
+.overlay {
+    background: rgba(0,0,0,0.6);
+    min-height: 100vh;
     padding: 20px;
-    overflow-x: auto;
 }
 
-.grid {
-    display: grid;
-    grid-template-columns: repeat(9, 60px);
-    grid-auto-rows: 60px;
-    gap: 3px;
+/* toolbar */
+.toolbar {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 20px;
 }
 
-/* cells */
-.cell {
+button, input {
+    padding: 10px;
+    border-radius: 10px;
+    border: none;
+    background: rgba(255,255,255,0.2);
+    color: white;
+    cursor: pointer;
+    backdrop-filter: blur(6px);
+}
+
+button:hover {
+    transform: scale(1.05);
+}
+
+/* canvas */
+.canvas {
+    width: 100%;
+    height: 70vh;
+    border: 2px dashed rgba(255,255,255,0.3);
+    position: relative;
+    overflow: hidden;
+}
+
+/* shapes */
+.shape {
+    position: absolute;
+    width: 80px;
+    height: 80px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(255,255,255,0.08);
-    border: 1px solid rgba(255,255,255,0.15);
-    font-size: 12px;
+    color: white;
+    cursor: move;
+    user-select: none;
 }
 
-.p { background: rgba(0,255,0,0.15); }
-.e { background: rgba(255,255,255,0.05); }
-.b1 { background: rgba(255,0,0,0.4); font-weight: bold; }
-.b2 { background: rgba(255,165,0,0.4); font-weight: bold; }
+.square {
+    border-radius: 5px;
+}
+
+.circle {
+    border-radius: 50%;
+}
+
+.selected {
+    outline: 3px solid yellow;
+}
 </style>
 </head>
 
 <body>
 
-<div class="wrapper">
+<div class="overlay">
 
-<div class="grid">
+<div class="toolbar">
+    <button onclick="addShape('square')">⬛ Square</button>
+    <button onclick="addShape('circle')">⚪ Circle</button>
+    <input type="color" id="colorPicker">
+    <button onclick="deleteShape()">🗑 Delete</button>
+</div>
 
-<!-- Row 1 -->
-<div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell"></div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div>
-
-<!-- Row 2 -->
-<div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell"></div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div>
-
-<!-- Row 3 -->
-<div class="cell p">P</div><div class="cell p">P</div><div class="cell p">B2</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell"></div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div>
-
-<!-- Row 4 -->
-<div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div>
-
-<!-- Row 5 -->
-<div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell e">E</div><div class="cell e">E</div><div class="cell e">E</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div>
-
-<!-- Row 6 -->
-<div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell e">E</div><div class="cell b1">B1</div><div class="cell e">E</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div>
-
-<!-- Row 7 -->
-<div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell e">E</div><div class="cell e">E</div><div class="cell e">E</div><div class="cell p">P</div><div class="cell p">P</div><div class="cell p">P</div>
+<div class="canvas" id="canvas"></div>
 
 </div>
 
-</div>
+<script>
+let selected = null;
+
+// add shape
+function addShape(type) {
+    const shape = document.createElement("div");
+    shape.classList.add("shape", type);
+    shape.style.background = document.getElementById("colorPicker").value || "red";
+    shape.style.left = "50px";
+    shape.style.top = "50px";
+    shape.contentEditable = true;
+    shape.innerText = "Text";
+
+    // select
+    shape.onclick = (e) => {
+        e.stopPropagation();
+        if (selected) selected.classList.remove("selected");
+        selected = shape;
+        shape.classList.add("selected");
+    };
+
+    // drag
+    let offsetX, offsetY;
+    shape.onmousedown = (e) => {
+        offsetX = e.offsetX;
+        offsetY = e.offsetY;
+
+        function move(e) {
+            shape.style.left = (e.pageX - offsetX) + "px";
+            shape.style.top = (e.pageY - offsetY) + "px";
+        }
+
+        document.addEventListener("mousemove", move);
+
+        document.onmouseup = () => {
+            document.removeEventListener("mousemove", move);
+        };
+    };
+
+    document.getElementById("canvas").appendChild(shape);
+}
+
+// delete
+function deleteShape() {
+    if (selected) {
+        selected.remove();
+        selected = null;
+    }
+}
+
+// deselect
+document.getElementById("canvas").onclick = () => {
+    if (selected) selected.classList.remove("selected");
+    selected = null;
+};
+</script>
 
 </body>
 </html>
