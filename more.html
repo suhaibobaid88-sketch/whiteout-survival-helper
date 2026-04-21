@@ -1,13 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>More - Whiteout Survival</title>
+
 <style>
 body {
   margin: 0;
+  font-family: Arial, sans-serif;
   min-height: 100vh;
 
   background-image: url('WOS.png');
-  background-size: cover;        /* تخلي الصورة تغطي الشاشة */
-  background-position: center;   /* تثبيت المنتصف */
-  background-repeat: no-repeat;  /* بدون تكرار */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
 
-  background-attachment: fixed;  /* يخليها ثابتة مع التمرير */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* طبقة شفافية */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1;
+}
+
+/* المحتوى */
+.container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 20px;
+}
+
+/* العنوان */
+.title {
+  color: white;
+  font-size: 28px;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+/* الشبكة */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+  gap: 15px;
+  max-width: 900px;
+  margin: auto;
+}
+
+/* الأزرار الدائرية */
+.circle {
+  width: 110px;
+  height: 110px;
+  border-radius: 50%;
+
+  background: rgba(255,255,255,0.15);
+  border: 1px solid rgba(255,255,255,0.3);
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  color: white;
+  text-decoration: none;
+  font-size: 12px;
+  text-align: center;
+
+  backdrop-filter: blur(6px);
+
+  transition: 0.3s;
+}
+
+.circle:hover {
+  transform: scale(1.1);
+  background: rgba(255,255,255,0.25);
+}
+
+/* زر الرجوع */
+.back-btn {
+  position: fixed;
+  top: 15px;
+  left: 15px;
+
+  padding: 10px 15px;
+  border-radius: 20px;
+
+  background: rgba(255,255,255,0.2);
+  border: 1px solid rgba(255,255,255,0.3);
+
+  color: white;
+  text-decoration: none;
+  font-size: 14px;
+
+  backdrop-filter: blur(6px);
+
+  transition: 0.3s;
+  z-index: 3;
+}
+
+.back-btn:hover {
+  background: rgba(255,255,255,0.35);
+  transform: scale(1.05);
 }
 </style>
+
+</head>
+
+<body>
+
+<div class="overlay"></div>
+
+<a class="back-btn" href="index.html">⬅ Back</a>
+
+<div class="container">
+
+  <div class="title">WHITEOUT SURVIVAL</div>
+
+  <div class="grid">
+
+    <a class="circle" href="more-events.html">More Events</a>
+    <a class="circle" href="calculator.html">Calculator</a>
+    <a class="circle" href="island-of-the-week.html">Island</a>
+    <a class="circle" href="svs.html">SVS</a>
+    <a class="circle" href="bear-trap.html">Bear Trap</a>
+    <a class="circle" href="state-events.html">State Events</a>
+    <a class="circle" href="crazy-joe.html">Crazy Joe</a>
+    <a class="circle" href="frostfire-mine.html">Frostfire</a>
+    <a class="circle" href="canyon.html">Canyon</a>
+    <a class="circle" href="tundra-albums.html">Tundra</a>
+    <a class="circle" href="ministry-positions.html">Ministry</a>
+    <a class="circle" href="castle-battle.html">Castle</a>
+    <a class="circle" href="dawn-academy.html">Dawn</a>
+    <a class="circle" href="foundry.html">Foundry</a>
+
+  </div>
+
+</div>
+
+</body>
+</html>
