@@ -1,200 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<title>Alliance System</title>
+    <meta charset="UTF-8">
+    <title>Login - Alliance System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            /* الخلفية المطلوبة */
+            background: url('Duser.png') center/cover no-repeat fixed;
+            overflow: hidden;
+        }
 
-<style>
-body {
-  margin: 0;
-  font-family: Arial;
-  height: 100vh;
-  overflow: hidden;
-  color: white;
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1;
+        }
 
-  background-image: url('KSA.png');
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-}
+        .login-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 320px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
 
-/* ===== MOBILE BACKGROUND FIX ===== */
-@media (max-width: 768px) {
-  body {
-    background-size: contain;
-    background-color: black;
-  }
-}
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+        }
 
-/* ===== CONTAINER ===== */
-.container {
-  display: flex;
-  justify-content: space-between;
-  padding: 20px;
-  gap: 20px;
-  height: 100vh;
-  box-sizing: border-box;
-}
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #ffcc00;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-/* ===== PANELS ===== */
-.panel,
-.panel-right {
-  width: 48%;
-  background: rgba(0,0,0,0.35);
-  border-radius: 10px;
-  padding: 10px;
-  overflow-y: auto;
-}
+        button:hover { background: #ffdb4d; transform: scale(1.03); }
 
-/* ===== HEADER WITH BUTTON ===== */
-.header-bar {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-}
+        #error-msg {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+            font-weight: bold;
+        }
 
-.header-bar h2 {
-  margin: 0;
-}
-
-/* ===== EVENTS BUTTON ===== */
-.more-btn {
-  position: absolute;
-  right: 10px;
-  padding: 6px 12px;
-  border: none;
-  border-radius: 6px;
-  background: rgba(255,215,0,0.8);
-  color: black;
-  font-weight: bold;
-  cursor: pointer;
-  transition: 0.2s;
-}
-
-.more-btn:hover {
-  background: gold;
-  transform: scale(1.05);
-}
-
-/* ===== TITLES ===== */
-h3 {
-  text-align: left;
-}
-
-/* ===== BOX ===== */
-.box {
-  padding: 6px;
-  margin: 4px;
-  border-radius: 5px;
-}
-
-/* ===== COLORS ===== */
-.r5 { background: rgba(255,215,0,0.5); color: black; }
-.r4 { background: rgba(255,165,0,0.4); color: black; }
-.r3 { background: rgba(77,184,255,0.4); color: black; }
-.r2 { background: rgba(144,238,144,0.4); color: black; }
-.r1 { background: rgba(128,128,128,0.4); color: white; }
-
-/* ===== MOBILE LAYOUT ===== */
-@media (max-width: 768px) {
-  body {
-    overflow: auto;
-  }
-
-  .container {
-    flex-direction: column;
-    height: auto;
-  }
-
-  .panel,
-  .panel-right {
-    width: 100%;
-    height: auto;
-  }
-}
-</style>
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .shake { animation: shake 0.4s ease-in-out; }
+    </style>
 </head>
-
 <body>
 
-<div class="container">
+<div class="overlay"></div>
 
-  <!-- LEFT -->
-  <div class="panel">
-
-    <div class="header-bar">
-      <h2>Alliance Members</h2>
-
-      <button class="more-btn" onclick="location.href='more.html'">
-        More
-      </button>
-    </div>
-
-    <h3>R5 (Leader)</h3>
-    <div class="box r5">AlRuwaili ID:228636462</div>
-
-    <hr>
-
-    <h3>R4 (20)</h3>
-    <div id="r4"></div>
-
-  </div>
-
-  <!-- RIGHT -->
-  <div class="panel-right">
-
-    <h2>Ranks System</h2>
-
-    <h3>R3 (90 Players)</h3>
-    <div id="r3"></div>
-
-    <hr>
-
-    <h3>R2 (30 Players)</h3>
-    <div id="r2"></div>
-
-    <hr>
-
-    <h3>R1 (20 Players)</h3>
-    <div id="r1"></div>
-
-  </div>
-
+<div class="login-card" id="loginCard">
+    <h2>KIS ACCESS</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="checkLogin()">LOGIN</button>
+    <p id="error-msg">Wrong User or Password!</p>
 </div>
 
 <script>
+function checkLogin() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+    const card = document.getElementById("loginCard");
+    const errorMsg = document.getElementById("error-msg");
 
-/* ===== DATA (أنت تعدل هنا فقط) ===== */
+    // الـ 50 مستخدم (عدل الباسووردات براحتك)
+    const users = {
+        "KIS1": "pass1", "KIS2": "pass2", "KIS3": "pass3", "KIS4": "pass4", "KIS5": "pass5",
+        "KIS6": "pass6", "KIS7": "pass7", "KIS8": "pass8", "KIS9": "pass9", "KIS10": "pass10",
+        "KIS11": "pass11", "KIS12": "pass12", "KIS13": "pass13", "KIS14": "pass14", "KIS15": "pass15",
+        "KIS16": "pass16", "KIS17": "pass17", "KIS18": "pass18", "KIS19": "pass19", "KIS20": "pass20",
+        "KIS21": "pass21", "KIS22": "pass22", "KIS23": "pass23", "KIS24": "pass24", "KIS25": "pass25",
+        "KIS26": "pass26", "KIS27": "pass27", "KIS28": "pass28", "KIS29": "pass29", "KIS30": "pass30",
+        "KIS31": "pass31", "KIS32": "pass32", "KIS33": "pass33", "KIS34": "pass34", "KIS35": "pass35",
+        "KIS36": "pass36", "KIS37": "pass37", "KIS38": "pass38", "KIS39": "pass39", "KIS40": "pass40",
+        "KIS41": "pass41", "KIS42": "pass42", "KIS43": "pass43", "KIS44": "pass44", "KIS45": "pass45",
+        "KIS46": "pass46", "KIS47": "pass47", "KIS48": "pass48", "KIS49": "pass49", "KIS50": "pass50"
+    };
 
-let r4 = [
-"3esawi","Player2","Player3","Player4","Player5",
-"Player6","Player7","Player8","Player9","Player10",
-"Player11","Player12","Player13","Player14","Player15",
-"Player16","Player17","Player18","Player19","Player20"
-];
-
-let r3 = Array(90).fill("Empty");
-let r2 = Array(30).fill("Empty");
-let r1 = Array(20).fill("Empty");
-
-/* ===== RENDER ===== */
-
-function renderList(id,data,className){
-  let container = document.getElementById(id);
-  container.innerHTML = "";
-
-  data.forEach(name => {
-    container.innerHTML += `<div class="box ${className}">${name}</div>`;
-  });
+    if (users[user] && users[user] === pass) {
+        // إذا صح بحولك لصفحة التحالف اللي اسمها alliance.html
+        window.location.href = "alliance.html";
+    } else {
+        errorMsg.style.display = "block";
+        card.classList.add("shake");
+        setTimeout(() => { card.classList.remove("shake"); }, 400);
+    }
 }
-
-/* ===== LOAD ===== */
-renderList("r4", r4, "r4");
-renderList("r3", r3, "r3");
-renderList("r2", r2, "r2");
-renderList("r1", r1, "r1");
-
 </script>
 
 </body>
