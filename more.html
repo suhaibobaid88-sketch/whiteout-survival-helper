@@ -9,12 +9,10 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   min-height: 100vh;
-
   background-image: url('WOS.png');
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-
   display: flex;
   justify-content: center;
   align-items: center;
@@ -34,7 +32,75 @@ body {
   z-index: 2;
   text-align: center;
   padding: 20px;
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(10px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  width: 80%;
+  max-width: 400px;
 }
+
+.title {
+  color: #ffcc00;
+  font-size: 24px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.menu-btn {
+  display: block;
+  width: 100%;
+  padding: 15px;
+  margin: 10px 0;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.1);
+  color: white;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  text-decoration: none;
+}
+
+.menu-btn:hover {
+  background: rgba(255, 215, 0, 0.8);
+  color: black;
+  transform: scale(1.05);
+}
+
+/* زر الرجوع الملون خصيصاً */
+.back-btn {
+  background: #ff4d4d;
+  margin-top: 20px;
+}
+
+.back-btn:hover {
+  background: #ff1a1a;
+  color: white;
+}
+</style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+    <h1 class="title">More Options</h1>
+
+    <button class="menu-btn" onclick="location.href='island-of-the-week.html'">Island of the Week</button>
+    <button class="menu-btn" onclick="location.href='bear-trap.html'">Bear Trap</button>
+    <button class="menu-btn" onclick="location.href='crazy-joe.html'">Crazy Joe</button>
+    <button class="menu-btn" onclick="location.href='svs.html'">SVS Guide</button>
+
+    <button class="menu-btn back-btn" onclick="location.href='alliance.html'">
+       ⬅ Back to Alliance
+    </button>
+</div>
+
+</body>
+</html>}
 
 /* العنوان */
 .title {
