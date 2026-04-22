@@ -12,7 +12,6 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            /* الخلفية المطلوبة */
             background: url('Duser.png') center/cover no-repeat fixed;
             overflow: hidden;
         }
@@ -99,7 +98,13 @@ function checkLogin() {
     const card = document.getElementById("loginCard");
     const errorMsg = document.getElementById("error-msg");
 
-    // الـ 50 مستخدم (عدل الباسووردات براحتك)
+    // 1. فحص الأدمن أولاً
+    if (user === "Admin" && pass === "admin") {
+        window.location.href = "state.html";
+        return; // إنهاء الوظيفة هنا إذا كان أدمن
+    }
+
+    // 2. قائمة الـ 50 مستخدم (دخول الأعضاء العاديين)
     const users = {
         "KIS1": "pass1", "KIS2": "pass2", "KIS3": "pass3", "KIS4": "pass4", "KIS5": "pass5",
         "KIS6": "pass6", "KIS7": "pass7", "KIS8": "pass8", "KIS9": "pass9", "KIS10": "pass10",
@@ -114,7 +119,6 @@ function checkLogin() {
     };
 
     if (users[user] && users[user] === pass) {
-        // إذا صح بحولك لصفحة التحالف اللي اسمها alliance.html
         window.location.href = "alliance.html";
     } else {
         errorMsg.style.display = "block";
