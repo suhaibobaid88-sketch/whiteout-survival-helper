@@ -9,7 +9,6 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   min-height: 100vh;
-
   /* خلفية احترافية */
   background: url('Island.png') center/cover no-repeat fixed;
   position: relative;
@@ -36,17 +35,13 @@ body::before {
   position: fixed;
   top: 15px;
   left: 15px;
-
   padding: 10px 15px;
   border-radius: 20px;
-
   background: rgba(255,255,255,0.2);
   border: 1px solid rgba(255,255,255,0.3);
-
   color: white;
   text-decoration: none;
   font-size: 14px;
-
   backdrop-filter: blur(6px);
   z-index: 9999;
 }
@@ -57,7 +52,6 @@ table {
   max-width: 800px;
   margin: 80px auto;
   border-collapse: collapse;
-
   background: rgba(255,255,255,0.1);
   backdrop-filter: blur(6px);
 }
@@ -75,14 +69,9 @@ th {
   background: rgba(255,255,255,0.2);
 }
 
-/* تعديل مباشر */
+/* إلغاء مؤشر اليد لأن التعديل ممنوع */
 td {
-  cursor: pointer;
-}
-
-td:focus {
-  outline: none;
-  background: rgba(255,255,255,0.25);
+  cursor: default;
 }
 
 /* موبايل */
@@ -98,46 +87,47 @@ td:focus {
 
 <body>
 
-<!-- زر الرجوع -->
 <a class="back-btn" href="./more.html">⬅ Back</a>
 
 <div class="container">
 
 <table id="table">
-  <tr>
-    <th>Name</th>
-    <th>Done / No</th>
-  </tr>
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Done / No</th>
+    </tr>
+  </thead>
+  <tbody id="table-body">
+    </tbody>
 </table>
 
 </div>
 
 <script>
-const table = document.getElementById("table");
+const tableBody = document.getElementById("table-body");
 
-/* إنشاء 100 صف */
-for (let i = 0; i < 100; i++) {
-  let row = table.insertRow();
+/* إنشاء 100 صف ثابتة */
+for (let i = 1; i <= 100; i++) {
+  let row = document.createElement("tr");
 
-  let nameCell = row.insertCell(0);
-  let doneCell = row.insertCell(1);
+  let nameCell = document.createElement("td");
+  let doneCell = document.createElement("td");
 
-  nameCell.contentEditable = true;
-  doneCell.contentEditable = true;
+  // إضافة النصوص المطلوبة
+  nameCell.innerText = "Name " + i;
+  doneCell.innerText = i;
 
-  /* تحميل البيانات */
-  nameCell.innerText = localStorage.getItem("name_" + i) || "";
-  doneCell.innerText = localStorage.getItem("done_" + i) || "";
+  // إيقاف خاصية التعديل (contentEditable = false)
+  nameCell.contentEditable = false;
+  doneCell.contentEditable = false;
 
-  /* حفظ تلقائي */
-  nameCell.addEventListener("input", () => {
-    localStorage.setItem("name_" + i, nameCell.innerText);
-  });
-
-  doneCell.addEventListener("input", () => {
-    localStorage.setItem("done_" + i, doneCell.innerText);
-  });
+  row.appendChild(nameCell);
+  row.appendChild(doneCell);
+  tableBody.appendChild(row);
 }
+
+// ملاحظة: قمت بإزالة أكواد localStorage لأنك تريد البيانات ثابتة من طرفك فقط
 </script>
 
 </body>
