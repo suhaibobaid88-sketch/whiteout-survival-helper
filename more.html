@@ -6,7 +6,64 @@
 
 <style>
 body {
+  margin: 0;<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>More - Whiteout Survival</title>
+
+<style>
+body {
   margin: 0;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+
+  background-image: url('WOS.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* طبقة شفافية */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.55);
+  z-index: 1;
+}
+
+/* المحتوى */
+.container {
+  position: relative;
+  z-index: 2;
+  text-align: center;
+  padding: 20px;
+}
+
+/* أضف هنا باقي الـ CSS الخاص بك كما هو */
+.back-btn {
+  /* ضع هنا ستايل الزر الخاص بك */
+  padding: 10px 20px;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="container">
+    <button class="back-btn" onclick="location.href='alliance.html'">
+       Back
+    </button>
+</div>
+
+</body>
+</html>
   font-family: Arial, sans-serif;
   min-height: 100vh;
   background-image: url('WOS.png');
