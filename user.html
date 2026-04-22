@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Login - Alliance System</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* الخلفية المطلوبة باسم Duser */
+    background: url('Duser.png') center/cover no-repeat;
+    overflow: hidden;
+}
+
+/* طبقة تغميق */
+.overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.65);
+    z-index: 1;
+}
+
+.login-card {
+    position: relative;
+    z-index: 2;
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    width: 320px;
+    text-align: center;
+    color: white;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.login-card h2 {
+    margin-bottom: 20px;
+    letter-spacing: 1px;
+}
+
+input {
+    width: 100%;
+    padding: 12px;
+    margin-bottom: 15px;
+    border-radius: 8px;
+    border: none;
+    background: rgba(255, 255, 255, 0.2);
+    color: white;
+    box-sizing: border-box;
+    outline: none;
+}
+
+input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    background: #ffcc00;
+    color: black;
+    font-weight: bold;
+    font-size: 16px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: gold;
+    transform: scale(1.02);
+}
+
+#error-msg {
+    color: #ff4d4d;
+    font-size: 14px;
+    margin-top: 10px;
+    display: none; /* مخفي في البداية */
+}
+
+/* انيميشن الاهتزاز عند الخطأ */
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    25% { transform: translateX(-10px); }
+    50% { transform: translateX(10px); }
+    75% { transform: translateX(-10px); }
+}
+
+.shake {
+    animation: shake 0.4s ease-in-out;
+}
+</style>
+</head>
+<body>
+
+<div class="overlay"></div>
+
+<div class="login-card" id="loginCard">
+    <h2>Access System</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="checkLogin()">Login</button>
+    <p id="error-msg">Invalid Username or Password!</p>
+</div>
+
+<script>
+function checkLogin() {
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+    const card = document.getElementById("loginCard");
+    const errorMsg = document.getElementById("error-msg");
+
+    // قائمة المستخدمين (تعدلها يدوياً من هنا)
+    const users = {
+        "KIS1": "pass1",
+        "KIS2": "pass2",
+        "KIS3": "pass3",
+        "KIS4": "pass4",
+        "KIS5": "pass5",
+        "KIS6": "pass6",
+        "KIS7": "pass7",
+        "KIS8": "pass8",
+        "KIS9": "pass9",
+        "KIS10": "pass10",
+        "KIS11": "pass11",
+        "KIS12": "pass12",
+        "KIS13": "pass13",
+        "KIS14": "pass14",
+        "KIS15": "pass15",
+        "KIS16": "pass16",
+        "KIS17": "pass17",
+        "KIS18": "pass18",
+        "KIS19": "pass19",
+        "KIS20": "pass20",
+        "KIS21": "pass21",
+        "KIS22": "pass22",
+        "KIS23": "pass23",
+        "KIS24": "pass24",
+        "KIS25": "pass25",
+        "KIS26": "pass26",
+        "KIS27": "pass27",
+        "KIS28": "pass28",
+        "KIS29": "pass29",
+        "KIS30": "pass30",
+        "KIS31": "pass31",
+        "KIS32": "pass32",
+        "KIS33": "pass33",
+        "KIS34": "pass34",
+        "KIS35": "pass35",
+        "KIS36": "pass36",
+        "KIS37": "pass37",
+        "KIS38": "pass38",
+        "KIS39": "pass39",
+        "KIS40": "pass40",
+        "KIS41": "pass41",
+        "KIS42": "pass42",
+        "KIS43": "pass43",
+        "KIS44": "pass44",
+        "KIS45": "pass45",
+        "KIS46": "pass46",
+        "KIS47": "pass47",
+        "KIS48": "pass48",
+        "KIS49": "pass49",
+        "KIS50": "pass50"
+    };
+
+    if (users[user] && users[user] === pass) {
+        // إذا كان اليوزر والباس صح، يحوله لصفحة index
+        window.location.href = "index.html";
+    } else {
+        // إذا خطأ، يظهر رسالة الخطأ ويهز الصفحة
+        errorMsg.style.display = "block";
+        card.classList.add("shake");
+        
+        // إزالة الكلاس بعد انتهاء الانيميشن ليعمل مرة أخرى
+        setTimeout(() => {
+            card.classList.remove("shake");
+        }, 400);
+    }
+}
+</script>
+
+</body>
+</html>
