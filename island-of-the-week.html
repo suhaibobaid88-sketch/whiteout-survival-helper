@@ -9,12 +9,10 @@ body {
   margin: 0;
   font-family: Arial, sans-serif;
   min-height: 100vh;
-  /* خلفية احترافية */
   background: url('Island.png') center/cover no-repeat fixed;
   position: relative;
 }
 
-/* طبقة تغميق عشان كل شيء يبين */
 body::before {
   content: "";
   position: fixed;
@@ -23,14 +21,12 @@ body::before {
   z-index: 0;
 }
 
-/* المحتوى */
 .container {
   position: relative;
   z-index: 2;
   padding: 20px;
 }
 
-/* زر الرجوع */
 .back-btn {
   position: fixed;
   top: 15px;
@@ -46,7 +42,6 @@ body::before {
   z-index: 9999;
 }
 
-/* الجدول */
 table {
   width: 100%;
   max-width: 800px;
@@ -56,7 +51,6 @@ table {
   backdrop-filter: blur(6px);
 }
 
-/* الخلايا */
 th, td {
   border: 1px solid rgba(255,255,255,0.2);
   padding: 10px;
@@ -64,22 +58,13 @@ th, td {
   color: white;
 }
 
-/* رأس الجدول */
 th {
   background: rgba(255,255,255,0.2);
 }
 
-/* إلغاء مؤشر اليد لأن التعديل ممنوع */
+/* منع التعديل بالماوس */
 td {
-  cursor: default;
-}
-
-/* موبايل */
-@media (max-width: 600px) {
-  th, td {
-    padding: 6px;
-    font-size: 12px;
-  }
+  user-select: none;
 }
 </style>
 
@@ -98,37 +83,32 @@ td {
       <th>Done / No</th>
     </tr>
   </thead>
-  <tbody id="table-body">
+  <tbody>
+    <tr> <td>Name 1</td> <td>1</td> </tr>
+    <tr> <td>Name 2</td> <td>2</td> </tr>
+    <tr> <td>Name 3</td> <td>3</td> </tr>
+    <tr> <td>Name 4</td> <td>4</td> </tr>
+    <tr> <td>Name 5</td> <td>5</td> </tr>
+    <tr> <td>Name 6</td> <td>6</td> </tr>
+    <tr> <td>Name 7</td> <td>7</td> </tr>
+    <tr> <td>Name 8</td> <td>8</td> </tr>
+    <tr> <td>Name 9</td> <td>9</td> </tr>
+    <tr> <td>Name 10</td> <td>10</td> </tr>
+    <tr> <td>Name 11</td> <td>11</td> </tr>
+    <tr> <td>Name 12</td> <td>12</td> </tr>
+    <tr> <td>Name 13</td> <td>13</td> </tr>
+    <tr> <td>Name 14</td> <td>14</td> </tr>
+    <tr> <td>Name 15</td> <td>15</td> </tr>
+    <tr> <td>Name 16</td> <td>16</td> </tr>
+    <tr> <td>Name 17</td> <td>17</td> </tr>
+    <tr> <td>Name 18</td> <td>18</td> </tr>
+    <tr> <td>Name 19</td> <td>19</td> </tr>
+    <tr> <td>Name 20</td> <td>20</td> </tr>
+    
     </tbody>
 </table>
 
 </div>
-
-<script>
-const tableBody = document.getElementById("table-body");
-
-/* إنشاء 100 صف ثابتة */
-for (let i = 1; i <= 100; i++) {
-  let row = document.createElement("tr");
-
-  let nameCell = document.createElement("td");
-  let doneCell = document.createElement("td");
-
-  // إضافة النصوص المطلوبة
-  nameCell.innerText = "Name " + i;
-  doneCell.innerText = i;
-
-  // إيقاف خاصية التعديل (contentEditable = false)
-  nameCell.contentEditable = false;
-  doneCell.contentEditable = false;
-
-  row.appendChild(nameCell);
-  row.appendChild(doneCell);
-  tableBody.appendChild(row);
-}
-
-// ملاحظة: قمت بإزالة أكواد localStorage لأنك تريد البيانات ثابتة من طرفك فقط
-</script>
 
 </body>
 </html>
