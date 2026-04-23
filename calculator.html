@@ -23,7 +23,7 @@ html, body {
 
 .overlay {
     min-height: 100vh;
-    background: rgba(0,0,0,0.82);
+    background: rgba(0,0,0,0.85);
     padding: 12px;
 }
 
@@ -50,13 +50,19 @@ h3 { margin: 0 0 10px; color: #ffd700; border-bottom: 1px solid rgba(255,255,255
 
 input {
     width: 100%;
-    padding: 10px;
+    padding: 12px; /* كبرت المسافة شوي عشان اللمس */
     border-radius: 7px;
     border: none;
-    font-size: 14px;
-    background: rgba(255,255,255,0.15);
+    font-size: 15px;
+    background: rgba(255,255,255,0.2);
     color: white;
     box-sizing: border-box;
+    outline: none;
+}
+
+input:focus {
+    background: rgba(255,255,255,0.3);
+    border: 1px solid #ffcc00;
 }
 
 button {
@@ -77,9 +83,10 @@ button {
     line-height: 1.8;
     font-size: 16px;
     border: 2px solid #ffcc00;
+    margin-top: 15px;
 }
 
-.back { margin-bottom: 15px; background: #444; color: white; width: auto; padding: 8px 20px; }
+.back { margin-bottom: 15px; background: #444; color: white; width: auto; padding: 10px 25px; }
 </style>
 </head>
 
@@ -90,78 +97,78 @@ button {
 
 <button class="back" onclick="goBack()">⬅ Back</button>
 
-<h2>🔥 Total Resources & Speedups</h2>
+<h2>🔥 Resources & Speedups Calc</h2>
 
 <div class="card">
 <h3>🪖 Infantry</h3>
-<input id="infNum" type="number" placeholder="Number of Batches/Troops">
+<input id="infNum" type="text" inputmode="numeric" placeholder="Number of Troops">
 
-<div class="label">💰 Total Resources for this type</div>
+<div class="label">💰 Total Resources</div>
 <div class="grid2">
-    <input id="infMeat" type="number" placeholder="Meat">
-    <input id="infWood" type="number" placeholder="Wood">
+    <input id="infMeat" type="text" inputmode="numeric" placeholder="Meat">
+    <input id="infWood" type="text" inputmode="numeric" placeholder="Wood">
 </div>
 <div class="grid2">
-    <input id="infIron" type="number" placeholder="Iron">
-    <input id="infCoal" type="number" placeholder="Coal">
+    <input id="infIron" type="text" inputmode="numeric" placeholder="Iron">
+    <input id="infCoal" type="text" inputmode="numeric" placeholder="Coal">
 </div>
 
-<div class="label">⏱ Total Time for this type (D / H / M / S)</div>
+<div class="label">⏱ Total Time (D / H / M / S)</div>
 <div class="grid4">
-    <input id="infD" type="number" placeholder="D">
-    <input id="infH" type="number" placeholder="H">
-    <input id="infM" type="number" placeholder="M">
-    <input id="infS" type="number" placeholder="S">
+    <input id="infD" type="text" inputmode="numeric" placeholder="D">
+    <input id="infH" type="text" inputmode="numeric" placeholder="H">
+    <input id="infM" type="text" inputmode="numeric" placeholder="M">
+    <input id="infS" type="text" inputmode="numeric" placeholder="S">
 </div>
-<input id="infPower" type="number" placeholder="Total Power gained">
+<input id="infPower" type="text" inputmode="numeric" placeholder="Total Power">
 </div>
 
 <div class="card">
 <h3>🐎 Lancer</h3>
-<input id="lanNum" type="number" placeholder="Number of Batches/Troops">
+<input id="lanNum" type="text" inputmode="numeric" placeholder="Number of Troops">
 
-<div class="label">💰 Total Resources for this type</div>
+<div class="label">💰 Total Resources</div>
 <div class="grid2">
-    <input id="lanMeat" type="number" placeholder="Meat">
-    <input id="lanWood" type="number" placeholder="Wood">
+    <input id="lanMeat" type="text" inputmode="numeric" placeholder="Meat">
+    <input id="lanWood" type="text" inputmode="numeric" placeholder="Wood">
 </div>
 <div class="grid2">
-    <input id="lanIron" type="number" placeholder="Iron">
-    <input id="lanCoal" type="number" placeholder="Coal">
+    <input id="lanIron" type="text" inputmode="numeric" placeholder="Iron">
+    <input id="lanCoal" type="text" inputmode="numeric" placeholder="Coal">
 </div>
 
-<div class="label">⏱ Total Time for this type</div>
+<div class="label">⏱ Total Time</div>
 <div class="grid4">
-    <input id="lanD" type="number" placeholder="D">
-    <input id="lanH" type="number" placeholder="H">
-    <input id="lanM" type="number" placeholder="M">
-    <input id="lanS" type="number" placeholder="S">
+    <input id="lanD" type="text" inputmode="numeric" placeholder="D">
+    <input id="lanH" type="text" inputmode="numeric" placeholder="H">
+    <input id="lanM" type="text" inputmode="numeric" placeholder="M">
+    <input id="lanS" type="text" inputmode="numeric" placeholder="S">
 </div>
-<input id="lanPower" type="number" placeholder="Total Power gained">
+<input id="lanPower" type="text" inputmode="numeric" placeholder="Total Power">
 </div>
 
 <div class="card">
 <h3>🎯 Marksman</h3>
-<input id="marNum" type="number" placeholder="Number of Batches/Troops">
+<input id="marNum" type="text" inputmode="numeric" placeholder="Number of Troops">
 
-<div class="label">💰 Total Resources for this type</div>
+<div class="label">💰 Total Resources</div>
 <div class="grid2">
-    <input id="marMeat" type="number" placeholder="Meat">
-    <input id="marWood" type="number" placeholder="Wood">
+    <input id="marMeat" type="text" inputmode="numeric" placeholder="Meat">
+    <input id="marWood" type="text" inputmode="numeric" placeholder="Wood">
 </div>
 <div class="grid2">
-    <input id="marIron" type="number" placeholder="Iron">
-    <input id="marCoal" type="number" placeholder="Coal">
+    <input id="marIron" type="text" inputmode="numeric" placeholder="Iron">
+    <input id="marCoal" type="text" inputmode="numeric" placeholder="Coal">
 </div>
 
-<div class="label">⏱ Total Time for this type</div>
+<div class="label">⏱ Total Time</div>
 <div class="grid4">
-    <input id="marD" type="number" placeholder="D">
-    <input id="marH" type="number" placeholder="H">
-    <input id="marM" type="number" placeholder="M">
-    <input id="marS" type="number" placeholder="S">
+    <input id="marD" type="text" inputmode="numeric" placeholder="D">
+    <input id="marH" type="text" inputmode="numeric" placeholder="H">
+    <input id="marM" type="text" inputmode="numeric" placeholder="M">
+    <input id="marS" type="text" inputmode="numeric" placeholder="S">
 </div>
-<input id="marPower" type="number" placeholder="Total Power gained">
+<input id="marPower" type="text" inputmode="numeric" placeholder="Total Power">
 </div>
 
 <button onclick="calc()">⚡ CALCULATE TOTAL</button>
