@@ -98,6 +98,12 @@ function checkLogin() {
     const card = document.getElementById("loginCard");
     const errorMsg = document.getElementById("error-msg");
 
+    // 1. فحص الروت أولاً
+    if (user === "Root" && pass === "root") {
+        window.location.href = "root.html";
+        return; // إنهاء الوظيفة هنا إذا كان روت
+    }
+
     // 1. فحص الأدمن أولاً
     if (user === "Admin" && pass === "admin") {
         window.location.href = "state.html";
