@@ -1,130 +1,130 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <title>Login - Alliance System</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: url('Duser.png') center/cover no-repeat fixed;
-            overflow: hidden;
-        }
+    <meta charset="UTF-8">
+    <title>Login - Alliance System</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: url('Duser.png') center/cover no-repeat fixed;
+            overflow: hidden;
+        }
 
-        .overlay {
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.7);
-            z-index: 1;
-        }
+        .overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.7);
+            z-index: 1;
+        }
 
-        .login-card {
-            position: relative;
-            z-index: 2;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(12px);
-            padding: 35px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.2);
-            width: 320px;
-            text-align: center;
-            color: white;
-            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
-        }
+        .login-card {
+            position: relative;
+            z-index: 2;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(12px);
+            padding: 35px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            width: 320px;
+            text-align: center;
+            color: white;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.6);
+        }
 
-        input {
-            width: 100%;
-            padding: 12px;
-            margin-bottom: 15px;
-            border-radius: 8px;
-            border: none;
-            background: rgba(255, 255, 255, 0.15);
-            color: white;
-            box-sizing: border-box;
-            outline: none;
-        }
+        input {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border: none;
+            background: rgba(255, 255, 255, 0.15);
+            color: white;
+            box-sizing: border-box;
+            outline: none;
+        }
 
-        button {
-            width: 100%;
-            padding: 12px;
-            border: none;
-            border-radius: 8px;
-            background: #ffcc00;
-            color: black;
-            font-weight: bold;
-            cursor: pointer;
-            transition: 0.3s;
-        }
+        button {
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            background: #ffcc00;
+            color: black;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
 
-        button:hover { background: #ffdb4d; transform: scale(1.03); }
+        button:hover { background: #ffdb4d; transform: scale(1.03); }
 
-        #error-msg {
-            color: #ff4d4d;
-            font-size: 14px;
-            margin-top: 15px;
-            display: none;
-            font-weight: bold;
-        }
+        #error-msg {
+            color: #ff4d4d;
+            font-size: 14px;
+            margin-top: 15px;
+            display: none;
+            font-weight: bold;
+        }
 
-        @keyframes shake {
-            0%, 100% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            75% { transform: translateX(10px); }
-        }
-        .shake { animation: shake 0.4s ease-in-out; }
-    </style>
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        .shake { animation: shake 0.4s ease-in-out; }
+    </style>
 </head>
 <body>
 
 <div class="overlay"></div>
 
 <div class="login-card" id="loginCard">
-    <h2>KIS ACCESS</h2>
-    <input type="text" id="username" placeholder="Username">
-    <input type="password" id="password" placeholder="Password">
-    <button onclick="checkLogin()">LOGIN</button>
-    <p id="error-msg">Wrong User or Password!</p>
+    <h2>KIS ACCESS</h2>
+    <input type="text" id="username" placeholder="Username">
+    <input type="password" id="password" placeholder="Password">
+    <button onclick="checkLogin()">LOGIN</button>
+    <p id="error-msg">Wrong User or Password!</p>
 </div>
 
 <script>
 function checkLogin() {
-    const user = document.getElementById("username").value;
-    const pass = document.getElementById("password").value;
-    const card = document.getElementById("loginCard");
-    const errorMsg = document.getElementById("error-msg");
+    const user = document.getElementById("username").value;
+    const pass = document.getElementById("password").value;
+    const card = document.getElementById("loginCard");
+    const errorMsg = document.getElementById("error-msg");
 
-    // 1. فحص الأدمن أولاً
-    if (user === "Admin" && pass === "admin") {
-        window.location.href = "state.html";
-        return; // إنهاء الوظيفة هنا إذا كان أدمن
-    }
+    // 1. فحص الأدمن أولاً
+    if (user === "Admin" && pass === "admin") {
+        window.location.href = "state.html";
+        return; // إنهاء الوظيفة هنا إذا كان أدمن
+    }
 
-    // 2. قائمة الـ 50 مستخدم (دخول الأعضاء العاديين)
-    const users = {
-        "KIS1": "pass1", "KIS2": "pass2", "KIS3": "pass3", "KIS4": "pass4", "KIS5": "pass5",
-        "KIS6": "pass6", "KIS7": "pass7", "KIS8": "pass8", "KIS9": "pass9", "KIS10": "pass10",
-        "KIS11": "pass11", "KIS12": "pass12", "KIS13": "pass13", "KIS14": "pass14", "KIS15": "pass15",
-        "KIS16": "pass16", "KIS17": "pass17", "KIS18": "pass18", "KIS19": "pass19", "KIS20": "pass20",
-        "KIS21": "pass21", "KIS22": "pass22", "KIS23": "pass23", "KIS24": "pass24", "KIS25": "pass25",
-        "KIS26": "pass26", "KIS27": "pass27", "KIS28": "pass28", "KIS29": "pass29", "KIS30": "pass30",
-        "KIS31": "pass31", "KIS32": "pass32", "KIS33": "pass33", "KIS34": "pass34", "KIS35": "pass35",
-        "KIS36": "pass36", "KIS37": "pass37", "KIS38": "pass38", "KIS39": "pass39", "KIS40": "pass40",
-        "KIS41": "pass41", "KIS42": "pass42", "KIS43": "pass43", "KIS44": "pass44", "KIS45": "pass45",
-        "KIS46": "pass46", "KIS47": "pass47", "KIS48": "pass48", "KIS49": "pass49", "KIS50": "pass50"
-    };
+    // 2. قائمة الـ 50 مستخدم (دخول الأعضاء العاديين)
+    const users = {
+        "KIS1": "pass1", "KIS2": "pass2", "KIS3": "pass3", "KIS4": "pass4", "KIS5": "pass5",
+        "KIS6": "pass6", "KIS7": "pass7", "KIS8": "pass8", "KIS9": "pass9", "KIS10": "pass10",
+        "KIS11": "pass11", "KIS12": "pass12", "KIS13": "pass13", "KIS14": "pass14", "KIS15": "pass15",
+        "KIS16": "pass16", "KIS17": "pass17", "KIS18": "pass18", "KIS19": "pass19", "KIS20": "pass20",
+        "KIS21": "pass21", "KIS22": "pass22", "KIS23": "pass23", "KIS24": "pass24", "KIS25": "pass25",
+        "KIS26": "pass26", "KIS27": "pass27", "KIS28": "pass28", "KIS29": "pass29", "KIS30": "pass30",
+        "KIS31": "pass31", "KIS32": "pass32", "KIS33": "pass33", "KIS34": "pass34", "KIS35": "pass35",
+        "KIS36": "pass36", "KIS37": "pass37", "KIS38": "pass38", "KIS39": "pass39", "KIS40": "pass40",
+        "KIS41": "pass41", "KIS42": "pass42", "KIS43": "pass43", "KIS44": "pass44", "KIS45": "pass45",
+        "KIS46": "pass46", "KIS47": "pass47", "KIS48": "pass48", "KIS49": "pass49", "KIS50": "pass50"
+    };
 
-    if (users[user] && users[user] === pass) {
-        window.location.href = "alliance.html";
-    } else {
-        errorMsg.style.display = "block";
-        card.classList.add("shake");
-        setTimeout(() => { card.classList.remove("shake"); }, 400);
-    }
+    if (users[user] && users[user] === pass) {
+        window.location.href = "alliance.html";
+    } else {
+        errorMsg.style.display = "block";
+        card.classList.add("shake");
+        setTimeout(() => { card.classList.remove("shake"); }, 400);
+    }
 }
 </script>
 
