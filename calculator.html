@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>WOS Troops Calculator</title>
+<title>WOS Troops Calculator - Pro</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -33,49 +33,60 @@ html, body {
 }
 
 .card {
-    background: rgba(30,30,30,0.8);
+    background: rgba(30,30,30,0.85);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 14px;
-    padding: 14px;
+    padding: 16px;
     margin-bottom: 16px;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-h2 { margin: 0 0 10px; text-align: center; color: #ffcc00; }
-h3 { margin: 0 0 10px; color: #ffd700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
+h2 { margin: 0 0 15px; text-align: center; color: #ffcc00; text-transform: uppercase; letter-spacing: 2px; }
+h3 { margin: 0 0 10px; color: #ffd700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; display: flex; align-items: center; gap: 10px; }
 
-.label { font-size: 12px; opacity: 0.7; margin: 12px 0 6px; color: #00ffcc; }
+.label { font-size: 12px; opacity: 0.8; margin: 12px 0 6px; color: #00ffcc; font-weight: bold; }
 
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 6px; }
 .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 6px; }
 
+.target-box {
+    background: rgba(255, 204, 0, 0.1);
+    border: 1px solid #ffcc00;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
 input {
     width: 100%;
-    padding: 12px; /* كبرت المسافة شوي عشان اللمس */
+    padding: 12px;
     border-radius: 7px;
     border: none;
     font-size: 15px;
-    background: rgba(255,255,255,0.2);
+    background: rgba(255,255,255,0.15);
     color: white;
     box-sizing: border-box;
     outline: none;
+    transition: 0.3s;
 }
 
 input:focus {
-    background: rgba(255,255,255,0.3);
-    border: 1px solid #ffcc00;
+    background: rgba(255,255,255,0.25);
+    box-shadow: 0 0 5px #ffcc00;
 }
 
 button {
     width: 100%;
-    padding: 15px;
+    padding: 18px;
     margin-top: 10px;
     border: none;
-    border-radius: 10px;
+    border-radius: 12px;
     background: linear-gradient(90deg,#ffcc00,#ff8800);
     font-weight: bold;
-    font-size: 16px;
+    font-size: 18px;
     cursor: pointer;
     color: black;
+    box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
 }
 
 .result {
@@ -83,10 +94,11 @@ button {
     line-height: 1.8;
     font-size: 16px;
     border: 2px solid #ffcc00;
-    margin-top: 15px;
+    margin-top: 20px;
+    background: rgba(0,0,0,0.9);
 }
 
-.back { margin-bottom: 15px; background: #444; color: white; width: auto; padding: 10px 25px; }
+.back { margin-bottom: 15px; background: #444; color: white; width: auto; padding: 10px 25px; border-radius: 8px; cursor: pointer; }
 </style>
 </head>
 
@@ -97,81 +109,99 @@ button {
 
 <button class="back" onclick="goBack()">⬅ Back</button>
 
-<h2>🔥 Resources & Speedups Calc</h2>
+<h2>🔥 Advanced Troops Estimator</h2>
 
 <div class="card">
-<h3>🪖 Infantry</h3>
-<input id="infNum" type="text" inputmode="numeric" placeholder="Number of Troops">
+    <h3>🪖 Infantry</h3>
+    <div class="target-box">
+        <div class="label" style="color: #ffcc00;">🎯 TARGET AMOUNT (How many you want?)</div>
+        <input id="infTarget" type="text" inputmode="numeric" placeholder="e.g. 50000">
+    </div>
 
-<div class="label">💰 Total Resources</div>
-<div class="grid2">
-    <input id="infMeat" type="text" inputmode="numeric" placeholder="Meat">
-    <input id="infWood" type="text" inputmode="numeric" placeholder="Wood">
-</div>
-<div class="grid2">
-    <input id="infIron" type="text" inputmode="numeric" placeholder="Iron">
-    <input id="infCoal" type="text" inputmode="numeric" placeholder="Coal">
-</div>
+    <div class="label">📋 Base Info (Per Batch)</div>
+    <input id="infBaseNum" type="text" inputmode="numeric" placeholder="Troops per batch (e.g. 4000)">
 
-<div class="label">⏱ Total Time (D / H / M / S)</div>
-<div class="grid4">
-    <input id="infD" type="text" inputmode="numeric" placeholder="D">
-    <input id="infH" type="text" inputmode="numeric" placeholder="H">
-    <input id="infM" type="text" inputmode="numeric" placeholder="M">
-    <input id="infS" type="text" inputmode="numeric" placeholder="S">
-</div>
-<input id="infPower" type="text" inputmode="numeric" placeholder="Total Power">
-</div>
+    <div class="label">💰 Cost for this Batch</div>
+    <div class="grid2">
+        <input id="infMeat" type="text" inputmode="numeric" placeholder="Meat">
+        <input id="infWood" type="text" inputmode="numeric" placeholder="Wood">
+    </div>
+    <div class="grid2">
+        <input id="infIron" type="text" inputmode="numeric" placeholder="Iron">
+        <input id="infCoal" type="text" inputmode="numeric" placeholder="Coal">
+    </div>
 
-<div class="card">
-<h3>🐎 Lancer</h3>
-<input id="lanNum" type="text" inputmode="numeric" placeholder="Number of Troops">
-
-<div class="label">💰 Total Resources</div>
-<div class="grid2">
-    <input id="lanMeat" type="text" inputmode="numeric" placeholder="Meat">
-    <input id="lanWood" type="text" inputmode="numeric" placeholder="Wood">
-</div>
-<div class="grid2">
-    <input id="lanIron" type="text" inputmode="numeric" placeholder="Iron">
-    <input id="lanCoal" type="text" inputmode="numeric" placeholder="Coal">
-</div>
-
-<div class="label">⏱ Total Time</div>
-<div class="grid4">
-    <input id="lanD" type="text" inputmode="numeric" placeholder="D">
-    <input id="lanH" type="text" inputmode="numeric" placeholder="H">
-    <input id="lanM" type="text" inputmode="numeric" placeholder="M">
-    <input id="lanS" type="text" inputmode="numeric" placeholder="S">
-</div>
-<input id="lanPower" type="text" inputmode="numeric" placeholder="Total Power">
+    <div class="label">⏱ Time for this Batch</div>
+    <div class="grid4">
+        <input id="infD" type="text" inputmode="numeric" placeholder="D">
+        <input id="infH" type="text" inputmode="numeric" placeholder="H">
+        <input id="infM" type="text" inputmode="numeric" placeholder="M">
+        <input id="infS" type="text" inputmode="numeric" placeholder="S">
+    </div>
+    <input id="infPower" type="text" inputmode="numeric" placeholder="Power per batch">
 </div>
 
 <div class="card">
-<h3>🎯 Marksman</h3>
-<input id="marNum" type="text" inputmode="numeric" placeholder="Number of Troops">
+    <h3>🐎 Lancer</h3>
+    <div class="target-box">
+        <div class="label" style="color: #ffcc00;">🎯 TARGET AMOUNT</div>
+        <input id="lanTarget" type="text" inputmode="numeric" placeholder="e.g. 50000">
+    </div>
 
-<div class="label">💰 Total Resources</div>
-<div class="grid2">
-    <input id="marMeat" type="text" inputmode="numeric" placeholder="Meat">
-    <input id="marWood" type="text" inputmode="numeric" placeholder="Wood">
-</div>
-<div class="grid2">
-    <input id="marIron" type="text" inputmode="numeric" placeholder="Iron">
-    <input id="marCoal" type="text" inputmode="numeric" placeholder="Coal">
+    <div class="label">📋 Base Info (Per Batch)</div>
+    <input id="lanBaseNum" type="text" inputmode="numeric" placeholder="Troops per batch">
+
+    <div class="label">💰 Cost for this Batch</div>
+    <div class="grid2">
+        <input id="lanMeat" type="text" inputmode="numeric" placeholder="Meat">
+        <input id="lanWood" type="text" inputmode="numeric" placeholder="Wood">
+    </div>
+    <div class="grid2">
+        <input id="lanIron" type="text" inputmode="numeric" placeholder="Iron">
+        <input id="lanCoal" type="text" inputmode="numeric" placeholder="Coal">
+    </div>
+
+    <div class="label">⏱ Time for this Batch</div>
+    <div class="grid4">
+        <input id="lanD" type="text" inputmode="numeric" placeholder="D">
+        <input id="lanH" type="text" inputmode="numeric" placeholder="H">
+        <input id="lanM" type="text" inputmode="numeric" placeholder="M">
+        <input id="lanS" type="text" inputmode="numeric" placeholder="S">
+    </div>
+    <input id="lanPower" type="text" inputmode="numeric" placeholder="Power per batch">
 </div>
 
-<div class="label">⏱ Total Time</div>
-<div class="grid4">
-    <input id="marD" type="text" inputmode="numeric" placeholder="D">
-    <input id="marH" type="text" inputmode="numeric" placeholder="H">
-    <input id="marM" type="text" inputmode="numeric" placeholder="M">
-    <input id="marS" type="text" inputmode="numeric" placeholder="S">
-</div>
-<input id="marPower" type="text" inputmode="numeric" placeholder="Total Power">
+<div class="card">
+    <h3>🎯 Marksman</h3>
+    <div class="target-box">
+        <div class="label" style="color: #ffcc00;">🎯 TARGET AMOUNT</div>
+        <input id="marTarget" type="text" inputmode="numeric" placeholder="e.g. 50000">
+    </div>
+
+    <div class="label">📋 Base Info (Per Batch)</div>
+    <input id="marBaseNum" type="text" inputmode="numeric" placeholder="Troops per batch">
+
+    <div class="label">💰 Cost for this Batch</div>
+    <div class="grid2">
+        <input id="marMeat" type="text" inputmode="numeric" placeholder="Meat">
+        <input id="marWood" type="text" inputmode="numeric" placeholder="Wood">
+    </div>
+    <div class="grid2">
+        <input id="marIron" type="text" inputmode="numeric" placeholder="Iron">
+        <input id="marCoal" type="text" inputmode="numeric" placeholder="Coal">
+    </div>
+
+    <div class="label">⏱ Time for this Batch</div>
+    <div class="grid4">
+        <input id="marD" type="text" inputmode="numeric" placeholder="D">
+        <input id="marH" type="text" inputmode="numeric" placeholder="H">
+        <input id="marM" type="text" inputmode="numeric" placeholder="M">
+        <input id="marS" type="text" inputmode="numeric" placeholder="S">
+    </div>
+    <input id="marPower" type="text" inputmode="numeric" placeholder="Power per batch">
 </div>
 
-<button onclick="calc()">⚡ CALCULATE TOTAL</button>
+<button onclick="calc()">⚡ CALCULATE ESTIMATION</button>
 
 <div class="card result" id="result" style="display:none;"></div>
 
@@ -179,57 +209,3 @@ button {
 </div>
 
 <script>
-function goBack(){ window.location.href = "more.html"; }
-
-function toSeconds(d,h,m,s){
-    return (Number(d||0)*86400)+(Number(h||0)*3600)+(Number(m||0)*60)+Number(s||0);
-}
-
-function format(sec){
-    let d=Math.floor(sec/86400);
-    sec%=86400;
-    let h=Math.floor(sec/3600);
-    sec%=3600;
-    let m=Math.floor(sec/60);
-    let s=sec%60;
-    return `${d}D ${h}H ${m}M ${s}S`;
-}
-
-function calc(){
-    let M=0, W=0, I=0, C=0, P=0, T=0, totalTroops=0;
-
-    function gather(num, meat, wood, iron, coal, d, h, m, s, p){
-        totalTroops += (+num.value || 0);
-        M += (+meat.value || 0);
-        W += (+wood.value || 0);
-        I += (+iron.value || 0);
-        C += (+coal.value || 0);
-        P += (+p.value || 0);
-        T += toSeconds(d.value, h.value, m.value, s.value);
-    }
-
-    gather(infNum, infMeat, infWood, infIron, infCoal, infD, infH, infM, infS, infPower);
-    gather(lanNum, lanMeat, lanWood, lanIron, lanCoal, lanD, lanH, lanM, lanS, lanPower);
-    gather(marNum, marMeat, marWood, marIron, marCoal, marD, marH, marM, marS, marPower);
-
-    const resDiv = document.getElementById("result");
-    resDiv.style.display = "block";
-    resDiv.innerText = 
-    `📊 GRAND TOTAL RESULT
-
-    🪖 Total Combined Troops: ${totalTroops.toLocaleString()}
-
-    🥩 Total Meat: ${M.toLocaleString()}
-    🪵 Total Wood: ${W.toLocaleString()}
-    🔩 Total Iron: ${I.toLocaleString()}
-    🪨 Total Coal: ${C.toLocaleString()}
-
-    ⚡ Total Power Gained: ${P.toLocaleString()}
-
-    ⏱ Total Acceleration Needed: 
-    ${format(T)}`;
-}
-</script>
-
-</body>
-</html>
