@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>WOS Troops Calculator - Pro</title>
+<title>WOS Troops Calculator - Flexible</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
 <style>
@@ -38,20 +38,19 @@ html, body {
     border-radius: 14px;
     padding: 16px;
     margin-bottom: 16px;
-    box-shadow: 0 4px 15px rgba(0,0,0,0.3);
 }
 
-h2 { margin: 0 0 15px; text-align: center; color: #ffcc00; text-transform: uppercase; letter-spacing: 2px; }
-h3 { margin: 0 0 10px; color: #ffd700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; display: flex; align-items: center; gap: 10px; }
+h2 { margin: 0 0 15px; text-align: center; color: #ffcc00; text-transform: uppercase; }
+h3 { margin: 0 0 10px; color: #ffd700; border-bottom: 1px solid rgba(255,255,255,0.1); padding-bottom: 5px; }
 
-.label { font-size: 12px; opacity: 0.8; margin: 12px 0 6px; color: #00ffcc; font-weight: bold; }
+.label { font-size: 12px; opacity: 0.8; margin: 12px 0 6px; color: #00ffcc; }
 
 .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 6px; }
 .grid4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-bottom: 6px; }
 
 .target-box {
-    background: rgba(255, 204, 0, 0.1);
-    border: 1px solid #ffcc00;
+    background: rgba(255, 204, 0, 0.05);
+    border: 1px solid rgba(255, 204, 0, 0.3);
     padding: 10px;
     border-radius: 8px;
     margin-bottom: 10px;
@@ -67,12 +66,11 @@ input {
     color: white;
     box-sizing: border-box;
     outline: none;
-    transition: 0.3s;
 }
 
 input:focus {
     background: rgba(255,255,255,0.25);
-    box-shadow: 0 0 5px #ffcc00;
+    border: 1px solid #ffcc00;
 }
 
 button {
@@ -86,7 +84,6 @@ button {
     font-size: 18px;
     cursor: pointer;
     color: black;
-    box-shadow: 0 5px 15px rgba(255, 136, 0, 0.3);
 }
 
 .result {
@@ -96,9 +93,11 @@ button {
     border: 2px solid #ffcc00;
     margin-top: 20px;
     background: rgba(0,0,0,0.9);
+    padding: 15px;
+    border-radius: 10px;
 }
 
-.back { margin-bottom: 15px; background: #444; color: white; width: auto; padding: 10px 25px; border-radius: 8px; cursor: pointer; }
+.back { margin-bottom: 15px; background: #444; color: white; width: auto; padding: 10px 25px; border-radius: 8px; cursor: pointer; border:none; }
 </style>
 </head>
 
@@ -109,17 +108,17 @@ button {
 
 <button class="back" onclick="goBack()">⬅ Back</button>
 
-<h2>🔥 Advanced Troops Estimator</h2>
+<h2>🔥 Flexible Troops Calc</h2>
 
 <div class="card">
     <h3>🪖 Infantry</h3>
     <div class="target-box">
-        <div class="label" style="color: #ffcc00;">🎯 TARGET AMOUNT (How many you want?)</div>
+        <div class="label" style="color: #ffcc00;">🎯 TARGET AMOUNT (Optional)</div>
         <input id="infTarget" type="text" inputmode="numeric" placeholder="e.g. 50000">
     </div>
 
     <div class="label">📋 Base Info (Per Batch)</div>
-    <input id="infBaseNum" type="text" inputmode="numeric" placeholder="Troops per batch (e.g. 4000)">
+    <input id="infBaseNum" type="text" inputmode="numeric" placeholder="e.g. 4000">
 
     <div class="label">💰 Cost for this Batch</div>
     <div class="grid2">
@@ -144,12 +143,12 @@ button {
 <div class="card">
     <h3>🐎 Lancer</h3>
     <div class="target-box">
-        <div class="label" style="color: #ffcc00;">🎯 TARGET AMOUNT</div>
+        <div class="label" style="color: #ffcc00;">🎯 TARGET AMOUNT (Optional)</div>
         <input id="lanTarget" type="text" inputmode="numeric" placeholder="e.g. 50000">
     </div>
 
     <div class="label">📋 Base Info (Per Batch)</div>
-    <input id="lanBaseNum" type="text" inputmode="numeric" placeholder="Troops per batch">
+    <input id="lanBaseNum" type="text" inputmode="numeric" placeholder="e.g. 4000">
 
     <div class="label">💰 Cost for this Batch</div>
     <div class="grid2">
@@ -174,12 +173,12 @@ button {
 <div class="card">
     <h3>🎯 Marksman</h3>
     <div class="target-box">
-        <div class="label" style="color: #ffcc00;">🎯 TARGET AMOUNT</div>
+        <div class="label" style="color: #ffcc00;">🎯 TARGET AMOUNT (Optional)</div>
         <input id="marTarget" type="text" inputmode="numeric" placeholder="e.g. 50000">
     </div>
 
     <div class="label">📋 Base Info (Per Batch)</div>
-    <input id="marBaseNum" type="text" inputmode="numeric" placeholder="Troops per batch">
+    <input id="marBaseNum" type="text" inputmode="numeric" placeholder="e.g. 4000">
 
     <div class="label">💰 Cost for this Batch</div>
     <div class="grid2">
@@ -201,7 +200,7 @@ button {
     <input id="marPower" type="text" inputmode="numeric" placeholder="Power per batch">
 </div>
 
-<button onclick="calc()">⚡ CALCULATE ESTIMATION</button>
+<button onclick="calc()">⚡ CALCULATE</button>
 
 <div class="card result" id="result" style="display:none;"></div>
 
@@ -209,3 +208,76 @@ button {
 </div>
 
 <script>
+function goBack(){ window.location.href = "more.html"; }
+
+function toSeconds(d,h,m,s){
+    return (Number(d||0)*86400)+(Number(h||0)*3600)+(Number(m||0)*60)+Number(s||0);
+}
+
+function format(sec){
+    if(sec === 0) return "0D 0H 0M 0S";
+    let d=Math.floor(sec/86400);
+    sec%=86400;
+    let h=Math.floor(sec/3600);
+    sec%=3600;
+    let m=Math.floor(sec/60);
+    let s=Math.floor(sec%60);
+    return `${d}D ${h}H ${m}M ${s}S`;
+}
+
+function calc(){
+    let totalM=0, totalW=0, totalI=0, totalC=0, totalP=0, totalT=0, grandTroops=0;
+
+    function processType(targetInput, baseNumInput, meat, wood, iron, coal, d, h, m, s, p){
+        let target = parseFloat(targetInput.value) || 0;
+        let base = parseFloat(baseNumInput.value) || 0;
+        
+        // إذا كان هناك هدف وبنفس الوقت حطيت معلومات الوجبة، احسب النسبة
+        if(target > 0 && base > 0) {
+            let ratio = target / base;
+            grandTroops += target;
+            totalM += ratio * (parseFloat(meat.value) || 0);
+            totalW += ratio * (parseFloat(wood.value) || 0);
+            totalI += ratio * (parseFloat(iron.value) || 0);
+            totalC += ratio * (parseFloat(coal.value) || 0);
+            totalP += ratio * (parseFloat(p.value) || 0);
+            totalT += ratio * toSeconds(d.value, h.value, m.value, s.value);
+        } 
+        // إذا المستخدم حط بس موارد بدون "هدف" (كأنه بيحسب وجبة وحدة بس)
+        else if (base > 0 || target > 0) {
+            let val = target > 0 ? target : base;
+            grandTroops += val;
+            totalM += (parseFloat(meat.value) || 0);
+            totalW += (parseFloat(wood.value) || 0);
+            totalI += (parseFloat(iron.value) || 0);
+            totalC += (parseFloat(coal.value) || 0);
+            totalP += (parseFloat(p.value) || 0);
+            totalT += toSeconds(d.value, h.value, m.value, s.value);
+        }
+    }
+
+    processType(infTarget, infBaseNum, infMeat, infWood, infIron, infCoal, infD, infH, infM, infS, infPower);
+    processType(lanTarget, lanBaseNum, lanMeat, lanWood, lanIron, lanCoal, lanD, lanH, lanM, lanS, lanPower);
+    processType(marTarget, marBaseNum, marMeat, marWood, marIron, marCoal, marD, marH, marM, marS, marPower);
+
+    const resDiv = document.getElementById("result");
+    resDiv.style.display = "block";
+    resDiv.innerHTML = `
+        <h3 style="color:#ffcc00; border:none; text-align:center;">📊 RESULTS</h3>
+        <p>🪖 Total Troops: <b>${Math.round(grandTroops).toLocaleString()}</b></p>
+        <hr style="opacity:0.1">
+        <p>🥩 Meat: <b>${Math.round(totalM).toLocaleString()}</b></p>
+        <p>🪵 Wood: <b>${Math.round(totalW).toLocaleString()}</b></p>
+        <p>🔩 Iron: <b>${Math.round(totalI).toLocaleString()}</b></p>
+        <p>🪨 Coal: <b>${Math.round(totalC).toLocaleString()}</b></p>
+        <hr style="opacity:0.1">
+        <p>⚡ Power: <b>${Math.round(totalP).toLocaleString()}</b></p>
+        <p>⏱ Time: <b>${format(totalT)}</b></p>
+    `;
+    
+    resDiv.scrollIntoView({ behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>
