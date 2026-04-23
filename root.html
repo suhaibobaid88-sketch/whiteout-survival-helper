@@ -1,1 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Root Access - Control Center</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #0a0a0a;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
 
+        /* حاوية الصورة */
+        .image-container {
+            margin-top: 50px;
+            text-align: center;
+        }
+
+        .main-image {
+            max-width: 300px; /* يمكنك تعديل الحجم من هنا */
+            width: 90%;
+            height: auto;
+            border-radius: 15px;
+            box-shadow: 0 0 30px rgba(0, 255, 100, 0.2);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .content {
+            text-align: center;
+            margin-top: 30px;
+            z-index: 2;
+        }
+
+        h1 {
+            color: #00ff88;
+            font-size: 32px;
+            letter-spacing: 4px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
+        }
+
+        .status-box {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px dashed #00ff88;
+            display: inline-block;
+            margin-top: 20px;
+        }
+
+        .back-btn {
+            margin-top: 40px;
+            padding: 12px 30px;
+            background: transparent;
+            border: 1px solid #00ff88;
+            color: #00ff88;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: 0.3s;
+            font-weight: bold;
+        }
+
+        .back-btn:hover {
+            background: #00ff88;
+            color: black;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+        }
+    </style>
+</head>
+<body>
+
+    <div class="image-container">
+        <img src="KSA.png" alt="KSA Image" class="main-image">
+    </div>
+
+    <div class="content">
+        <h1>Root Control Center</h1>
+        
+        <div class="status-box">
+            <p>Welcome, Master User.</p>
+            <p style="font-size: 14px; color: #888;">System Status: <span style="color: #00ff88;">Online & Secure</span></p>
+        </div>
+
+        <br><br><br>
+        <a href="index.html" class="back-btn">Logout / Exit</a>
+    </div>
+
+</body>
+</html>
